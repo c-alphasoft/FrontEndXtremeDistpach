@@ -16,7 +16,6 @@ import { CommonModule, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
-
 interface profiledd {
   id: number;
   img: string;
@@ -28,7 +27,13 @@ interface profiledd {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, CommonModule, NgScrollbarModule, TablerIconsModule, MaterialModule],
+  imports: [
+    RouterModule,
+    CommonModule,
+    NgScrollbarModule,
+    TablerIconsModule,
+    MaterialModule,
+  ],
   templateUrl: './header.component.html',
   encapsulation: ViewEncapsulation.None,
 })
@@ -47,7 +52,6 @@ export class HeaderComponent {
     type: 'US',
     icon: '/assets/images/flag/icon-flag-en.svg',
   };
-
 
   constructor(
     private vsidenav: CoreService,
@@ -71,7 +75,4 @@ export class HeaderComponent {
       link: '/',
     },
   ];
-
 }
-
-

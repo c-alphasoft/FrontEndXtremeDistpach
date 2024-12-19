@@ -11,7 +11,6 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Despacho',
     iconName: 'truck',
-    route: '/',
     children: [
       {
         displayName: 'Control Despacho',

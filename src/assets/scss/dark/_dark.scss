@@ -80,6 +80,10 @@
     background: $darkcardbg !important;
   }
 
+  .contact-detail-part.activeContact, .detail-part.movetodetail{
+    background-color: $darkbackground !important;
+  }
+
   // -------------------------------------------------------
   // hover color background
   // -------------------------------------------------------
@@ -299,7 +303,7 @@ html.dark-theme {
   .sidebarNav-horizontal .horizontal-navbar .parentBox {
     &:hover > .activeMenu,
     .activeMenu {
-      color: $white;
+      color: $white !important;
     }
     .menuLink {
       color: #7c8fac;

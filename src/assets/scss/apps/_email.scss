@@ -18,3 +18,22 @@
     display: block !important;
   }
 }
+
+
+// chat app
+
+.add-invoice-list{
+  .table{
+    .mat-mdc-form-field-infix{
+      width: auto;
+    }
+  }
+}
+
+.edit-invoice-list{
+  .table{
+    .mat-mdc-form-field-infix{
+      width: auto;
+    }
+  }
+}

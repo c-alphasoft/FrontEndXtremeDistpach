@@ -1,7 +1,6 @@
 @use "@angular/material" as mat;
 @include mat.core();
 
-@import "themecolors/default_theme";
 @import "variables";
 @import "layouts/transitions";
 @import "helpers/color";
@@ -16,6 +15,9 @@
   @include mat.all-component-colors($darkbluetheme);
 }
 
+// .dark-theme .aqua_theme {
+//   @include mat.all-component-colors($darkaquatheme);
+// }
 
 .orange_theme {
   @import "themecolors/orange_theme";

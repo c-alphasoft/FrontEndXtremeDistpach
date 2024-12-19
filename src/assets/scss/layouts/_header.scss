@@ -30,6 +30,11 @@ html .topbar {
   object-fit: cover;
 }
 
+@media (min-width: 768px) {
+  .search-dialog {
+    width: 600px;
+  }
+}
 
 // perfect scroll
 .ps__rail-y {

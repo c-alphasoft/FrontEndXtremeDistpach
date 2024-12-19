@@ -20,6 +20,15 @@
   color: $primary !important;
 }
 
+.add-event-date .mat-mdc-icon-button {
+  width: 35px !important;
+  height: 35px !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 // ticket
 .max-text {
   max-width: 250px;
