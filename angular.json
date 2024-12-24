@@ -20,7 +20,7 @@
             "allowedCommonJsDependencies": [
               "bezier-easing"
             ],
-            "outputPath": "dist/Extreme",
+            "outputPath": "dist/Xtreme",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Extreme:build:production"
+              "buildTarget": "Xtreme:build:production"
             },
             "development": {
-              "buildTarget": "Extreme:build:development"
+              "buildTarget": "Xtreme:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Extreme:build"
+            "buildTarget": "Xtreme:build"
           }
         },
         "test": {
