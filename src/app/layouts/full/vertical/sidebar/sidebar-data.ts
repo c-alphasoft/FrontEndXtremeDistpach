@@ -10,13 +10,14 @@ export const navItems: NavItem[] = [
     route: "/starter",
   },
   {
-    displayName: "Despacho",
+    displayName: "Despachos",
     iconName: "file-invoice",
+    route: 'dispatch',
     children: [
       {
         displayName: "Control",
         iconName: "point",
-        route: "/",
+        route: "/dispatch/states",
       },
       {
         displayName: "Mapa",
@@ -28,6 +29,7 @@ export const navItems: NavItem[] = [
   {
     displayName: "Planificardor",
     iconName: "calendar-event",
+    route: 'dispatch',
     children: [
       {
         displayName: "Calendario",
@@ -64,6 +66,7 @@ export const navItems: NavItem[] = [
   {
     displayName: "Configuración",
     iconName: "Settings",
+    route: 'dispatch',
     children: [
       {
         displayName: "Flota",

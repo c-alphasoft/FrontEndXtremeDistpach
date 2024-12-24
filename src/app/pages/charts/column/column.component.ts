@@ -48,16 +48,12 @@ export class ColumnComponent {
     this.columnChartOptions = {
       series: [
         {
-          name: 'A',
-          data: [400, 120, 140, 130, 200, 150, 140, 130, 300, 120, 140, 150],
+          name: 'Aprobados',
+          data: [400, 120, 140, 320, 200, 450, 340, 430, 400, 520, 240, 450],
         },
         {
-          name: 'B',
-          data: [200, 188, 242, 300, 200, 400, 230, 300, 200, 400, 180, 300],
-        },
-        {
-          name: 'C',
-          data: [100, 200, 400, 600, 100, 200, 400, 370, 240, 200, 280, 330],
+          name: 'Rechazados',
+          data: [200, 88, 142, 300, 200, 400, 230, 300, 200, 400, 180, 300],
         },
       ],
       chart: {
@@ -77,7 +73,7 @@ export class ColumnComponent {
         },
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       markers: {
         size: 3,
@@ -86,7 +82,7 @@ export class ColumnComponent {
         curve: 'straight',
         width: '0',
       },
-      colors: ['#398bf7', '#06d79c'],
+      colors: ['#06d79c', '#d70606'],
       legend: {
         show: true,
       },
@@ -107,7 +103,7 @@ export class ColumnComponent {
       },
       xaxis: {
         type: 'category',
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+        categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nob', 'Dic'],
       },
       tooltip: {
         theme: 'dark',

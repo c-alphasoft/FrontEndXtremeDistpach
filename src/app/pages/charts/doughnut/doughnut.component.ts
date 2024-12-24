@@ -48,6 +48,7 @@ export class DoughnutComponent {
     //doughnut chart.
     this.doughnutChartOptions = {
       series: [45, 15],
+      labels: ['Aprobados', 'Rechazados'],
       chart: {
         id: 'donut-chart',
         type: 'donut',
@@ -56,7 +57,7 @@ export class DoughnutComponent {
         foreColor: '#adb0bb',
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       plotOptions: {
         pie: {
@@ -70,7 +71,7 @@ export class DoughnutComponent {
         position: 'bottom',
         width: '50px',
       },
-      colors: ['#5D87FF', '#ECF2FF', '#49BEFF', '#E8F7FF', '#FFAE1F'],
+      colors: ['#06d79c', '#d70606'],
       tooltip: {
         theme: 'dark',
         fillSeriesColor: false,
