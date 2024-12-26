@@ -29,7 +29,7 @@ export const navItems: NavItem[] = [
   {
     displayName: "Planificardor",
     iconName: "calendar-event",
-    route: 'dispatch',
+    route: '',
     children: [
       {
         displayName: "Calendario",
@@ -38,16 +38,6 @@ export const navItems: NavItem[] = [
       },
       {
         displayName: "Lista",
-        iconName: "point",
-        route: "/",
-      },
-      {
-        displayName: "Crear",
-        iconName: "point",
-        route: "/",
-      },
-      {
-        displayName: "Editar",
         iconName: "point",
         route: "/",
       },
@@ -66,7 +56,7 @@ export const navItems: NavItem[] = [
   {
     displayName: "Configuración",
     iconName: "Settings",
-    route: 'dispatch',
+    route: '',
     children: [
       {
         displayName: "Flota",
