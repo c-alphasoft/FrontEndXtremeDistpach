@@ -56,8 +56,13 @@ export const navItems: NavItem[] = [
   {
     displayName: "Configuración",
     iconName: "Settings",
-    route: '',
+    route: 'settings',
     children: [
+      {
+        displayName: "Usuarios",
+        iconName: "point",
+        route: "/settings/users",
+      },
       {
         displayName: "Flota",
         iconName: "point",

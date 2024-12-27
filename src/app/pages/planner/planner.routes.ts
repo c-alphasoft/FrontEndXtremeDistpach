@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AppFullcalendarComponent } from './fullcalendar/fullcalendar.component';
-import { AppKichenSinkComponent } from './list/datatable/kichen-sink/kichen-sink.component';
+import { AppPaginationTableComponent } from './pagination-table/pagination-table.component';
 
 export const PlannerRoutes: Routes = [
   {
@@ -15,7 +15,7 @@ export const PlannerRoutes: Routes = [
       },
       {
         path: 'data-table',
-        component: AppKichenSinkComponent,
+        component: AppPaginationTableComponent,
         data: {
           title: 'Lista de Despachos',
         },

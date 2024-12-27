@@ -29,6 +29,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/planner/planner.routes').then((m) => m.PlannerRoutes),
       },
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('./pages/settings/settings.routes').then((m) => m.SettingsRoutes),
+      },
     ],
   },
   {
