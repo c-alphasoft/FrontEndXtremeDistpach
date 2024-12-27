@@ -24,6 +24,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/dispatch/dispatch.routes').then((m) => m.DispatchRoutes),
       },
+      {
+        path: 'planner',
+        loadChildren: () =>
+          import('./pages/planner/planner.routes').then((m) => m.PlannerRoutes),
+      },
     ],
   },
   {

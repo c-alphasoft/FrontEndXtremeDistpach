@@ -29,17 +29,17 @@ export const navItems: NavItem[] = [
   {
     displayName: "Planificardor",
     iconName: "calendar-event",
-    route: '',
+    route: 'planner',
     children: [
       {
         displayName: "Calendario",
         iconName: "point",
-        route: "/",
+        route: "/planner/fullcalendar",
       },
       {
         displayName: "Lista",
         iconName: "point",
-        route: "/",
+        route: "/planner/data-table",
       },
     ],
   },
