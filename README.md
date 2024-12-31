@@ -1,2 +1,2 @@
-# Xtreme-Distpach-Angular
-Xtreme Distpach Anuglar Admin Dashboard full new
+# Xtreme-Distpach
+Xtreme Distpach Admin Dashboard

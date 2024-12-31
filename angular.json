@@ -18,7 +18,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "bezier-easing"
+              "bezier-easing",
+              "apexcharts"
             ],
             "outputPath": "dist/Xtreme",
             "index": "src/index.html",

@@ -17,12 +17,12 @@ export const navItems: NavItem[] = [
       {
         displayName: "Control",
         iconName: "point",
-        route: "/dispatch/states",
+        route: "/dispatch/dispatch-list",
       },
       {
         displayName: "Mapa",
         iconName: "point",
-        route: "/",
+        route: "/dispatch/states",
       },
     ],
   },
