@@ -9,6 +9,9 @@ export class EgretCalendarEvent implements CalendarEvent {
   start: Date;
   end: Date;
   title: string;
+  client: string;
+  volume: string;
+  product: string;
   color?: {
     primary: string;
     secondary: string;
@@ -26,12 +29,15 @@ export class EgretCalendarEvent implements CalendarEvent {
     notes: string;
   };
 
-  constructor(data: any) {
+  constructor(data: any) {    
     data = data || {};
     this.start = new Date(data.start) || startOfDay(new Date());
     this.end = new Date(data.end);
     this._id = data._id || '';
     this.title = data.title || '';
+    this.client = data.client || '';
+    this.product = data.product || '';
+    this.volume = data.volume || '';
     this.color = {
       primary: (data.color && data.color.primary) || '#247ba0',
       secondary: (data.color && data.color.secondary) || '#D1E8FF',

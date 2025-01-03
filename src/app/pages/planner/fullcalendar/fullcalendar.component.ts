@@ -3,8 +3,14 @@ import {
   ChangeDetectionStrategy,
   Inject,
   signal,
+  LOCALE_ID,
 } from '@angular/core';
-import { CommonModule, DOCUMENT, NgSwitch } from '@angular/common';
+import {
+  CommonModule,
+  DOCUMENT,
+  NgSwitch,
+  registerLocaleData,
+} from '@angular/common';
 import {
   MatDialog,
   MatDialogRef,
@@ -37,6 +43,7 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarModule,
   CalendarView,
+  DateAdapter,
 } from 'angular-calendar';
 import { MaterialModule } from 'src/app/material.module';
 import {
@@ -45,6 +52,10 @@ import {
 } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import localeEs from '@angular/common/locales/es';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { TablerIconsModule } from 'angular-tabler-icons';
+import { IconEdit, IconTrash } from 'angular-tabler-icons/icons';
 
 const colors: any = {
   red: {
@@ -61,6 +72,9 @@ const colors: any = {
   },
 };
 
+// Registra el idioma español
+registerLocaleData(localeEs);
+
 @Component({
   selector: 'app-calendar-dialog',
   templateUrl: './dialog.component.html',
@@ -73,6 +87,7 @@ const colors: any = {
     MatNativeDateModule,
     MatDialogModule,
     MatDatepickerModule,
+    TablerIconsModule,
   ],
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -80,10 +95,16 @@ const colors: any = {
 export class CalendarDialogComponent {
   options!: UntypedFormGroup;
 
+  event: CalendarEvent;
+
   constructor(
     public dialogRef: MatDialogRef<CalendarDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+        // Asegúrate de que los datos lleguen correctamente
+        this.event = data.event;
+        console.log('Datos del evento:', this.event);
+  }
 }
 
 @Component({
@@ -103,7 +124,14 @@ export class CalendarDialogComponent {
     MatDialogModule,
     MatFormFieldModule,
   ],
-  providers: [provideNativeDateAdapter(), CalendarDateFormatter],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es' },
+    {
+      provide: DateAdapter,
+      useFactory: adapterFactory, // Usa el adaptador de `date-fns`
+    },
+    CalendarDateFormatter,
+  ],
 })
 export class AppFullcalendarComponent {
   dialogRef = signal<MatDialogRef<CalendarDialogComponent> | any>(null);
@@ -133,18 +161,18 @@ export class AppFullcalendarComponent {
 
   actions: CalendarEventAction[] = [
     {
-      label: '<span class="text-white link m-l-5">: Edit</span>',
+      label: '<span class="text-white link m-l-5">: Editar</span>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edit', event);
+        this.handleEvent('Editar', event);
       },
     },
     {
-      label: '<span class="text-danger m-l-5">Delete</span>',
+      label: '<span class="text-danger m-l-5">Eliminar</span>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events.set(
           this.events().filter((iEvent: CalendarEvent<any>) => iEvent !== event)
         );
-        this.handleEvent('Deleted', event);
+        this.handleEvent('Eliminar', event);
       },
     },
   ];
@@ -153,41 +181,42 @@ export class AppFullcalendarComponent {
 
   events = signal<CalendarEvent[] | any>([
     {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
+      start: startOfDay(new Date()),
+      end: startOfDay(new Date()),
+      title: 'ACOP',
+      client: "ACOP",
+      product: "XM-DC-DH-001",
+      volume: "m3",
       color: colors.red,
       actions: this.actions,
     },
     {
       start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.blue,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
+      end: startOfDay(new Date()),
+      title: 'GEOVITA',
+      client: "ACOP",
+      product: "XM-DC-DH-001",
+      volume: "m3",
       color: colors.yellow,
       actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+    },
+    {
+      start: startOfDay(new Date()),
+      end: startOfDay(new Date()),
+      title: 'GARDALIC',
+      client: "ACOP",
+      product: "XM-DC-DH-001",
+      volume: "m3",
+      color: colors.blue,
+      actions: this.actions,
     },
   ]);
 
   constructor(public dialog: MatDialog, @Inject(DOCUMENT) doc: any) {}
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    console.log('Fecha seleccionada:', date);
+    console.log('Eventos en ese día:', events);
     if (isSameMonth(date, this.viewDate())) {
       if (
         (isSameDay(this.viewDate(), date) && this.activeDayIsOpen() === true) ||
@@ -223,6 +252,7 @@ export class AppFullcalendarComponent {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
+
     this.config.data = { event, action };
     this.dialogRef.set(this.dialog.open(CalendarDialogComponent, this.config));
 
@@ -247,13 +277,13 @@ export class AppFullcalendarComponent {
     );
     this.dialogRef2()
       .afterClosed()
-      .subscribe((res: { action: any; event: any }) => {
+      .subscribe((res: { action: any; event: any }) => {        
         if (!res) {
           return;
         }
         const dialogAction = res.action;
         const responseEvent = res.event;
-        responseEvent.actions = this.actions;
+        responseEvent.actions = this.actions;        
         this.events.set([...this.events(), responseEvent]);
         this.dialogRef2.set(null);
         this.refresh.next(res);
@@ -261,11 +291,10 @@ export class AppFullcalendarComponent {
   }
 
   deleteEvent(eventToDelete: CalendarEvent): void {
-    this.events.set(
-      this.events().filter(
-        (event: CalendarEvent<any>) => event !== eventToDelete
-      )
+    const updatedEvents = this.events().filter(
+      (event: CalendarEvent<any>) => event !== eventToDelete
     );
+    this.events.set(updatedEvents);
   }
 
   setView(view: CalendarView | any): void {

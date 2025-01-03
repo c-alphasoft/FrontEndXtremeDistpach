@@ -59,22 +59,22 @@ export class CalendarFormDialogComponent {
       this.event.set(
         new EgretCalendarEvent({
           start: data.date,
-          end: data.date,
         })
       );
     }
-
     // console.log(data);
     this.eventForm = this.buildEventForm(this.event());
   }
 
   buildEventForm(event: any): any {
-    return new UntypedFormGroup({
+    event.client = event.client || ''; 
+    const formGroup = new UntypedFormGroup({
       _id: new UntypedFormControl(event._id),
-      title: new UntypedFormControl(event.title),
+      client: new UntypedFormControl(event.client),
+      product: new UntypedFormControl(event.product),
+      volume: new UntypedFormControl(event.volume),
+      title: new UntypedFormControl(event.client), 
       start: new UntypedFormControl(event.start),
-      end: new UntypedFormControl(event.end),
-      allDay: new UntypedFormControl(event.allDay),
       color: this.formBuilder.group({
         primary: new UntypedFormControl(event.color.primary),
         secondary: new UntypedFormControl(event.color.secondary),
@@ -85,5 +85,11 @@ export class CalendarFormDialogComponent {
       }),
       draggable: new UntypedFormControl(true),
     });
+
+    // Vincula automáticamente 'title' con 'client'
+    formGroup.get('client')?.valueChanges.subscribe((value) => {
+      formGroup.get('title')?.setValue(value, { emitEvent: false });
+    });
+    return formGroup;
   }
 }
