@@ -19,7 +19,7 @@ import { CoreService } from 'src/app/services/core.service';
       } @if(options.theme === 'dark') {
       <a href="/">
         <img
-          src="./assets/images/logos/x.png"
+          src="./assets/images/logos/xdark.png"
           class="align-middle m-2"
           alt="logo"
         />
