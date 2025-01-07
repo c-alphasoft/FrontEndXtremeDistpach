@@ -10,44 +10,36 @@ export const navItems: NavItem[] = [
     route: "/starter",
   },
   {
-    displayName: "Despacho",
+    displayName: "Despachos",
     iconName: "file-invoice",
+    route: 'dispatch',
     children: [
       {
         displayName: "Control",
         iconName: "point",
-        route: "/",
+        route: "/dispatch/dispatch-list",
       },
       {
         displayName: "Mapa",
         iconName: "point",
-        route: "/",
+        route: "/dispatch/states",
       },
     ],
   },
   {
     displayName: "Planificardor",
     iconName: "calendar-event",
+    route: 'planner',
     children: [
       {
         displayName: "Calendario",
         iconName: "point",
-        route: "/",
+        route: "/planner/fullcalendar",
       },
       {
         displayName: "Lista",
         iconName: "point",
-        route: "/",
-      },
-      {
-        displayName: "Crear",
-        iconName: "point",
-        route: "/",
-      },
-      {
-        displayName: "Editar",
-        iconName: "point",
-        route: "/",
+        route: "/planner/data-table",
       },
     ],
   },
@@ -64,7 +56,13 @@ export const navItems: NavItem[] = [
   {
     displayName: "Configuración",
     iconName: "Settings",
+    route: 'settings',
     children: [
+      {
+        displayName: "Usuarios",
+        iconName: "point",
+        route: "/settings/users",
+      },
       {
         displayName: "Flota",
         iconName: "point",

@@ -9,12 +9,11 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 @Component({
   selector: 'app-breadcrumb',
   standalone: true,
-  imports: [RouterModule, NgIf, TablerIconsModule],
+  imports: [RouterModule, TablerIconsModule],
   templateUrl: './breadcrumb.component.html',
   styleUrls: [],
 })
 export class AppBreadcrumbComponent {
-  // @Input() layout;
   pageInfo: Data | any = Object.create(null);
   myurl: any = this.router.url.slice(1).split('/');
   constructor(
@@ -35,10 +34,8 @@ export class AppBreadcrumbComponent {
       )
       .pipe(filter((route) => route.outlet === 'primary'))
       .pipe(mergeMap((route) => route.data))
-      // tslint:disable-next-line - Disables all
       .subscribe((event) => {
-        // tslint:disable-next-line - Disables all
-        this.titleService.setTitle(event['title'] + ' - Angular 18');
+        this.titleService.setTitle(event['title'] + '- Xtreme Dispatch');
         this.pageInfo = event;
       });
   }

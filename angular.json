@@ -18,9 +18,10 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "bezier-easing"
+              "bezier-easing",
+              "apexcharts"
             ],
-            "outputPath": "dist/Extreme",
+            "outputPath": "dist/Xtreme",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -29,7 +30,8 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.scss",
-              "src/assets/scss/style.scss"
+              "src/assets/scss/style.scss",
+              "node_modules/angular-calendar/css/angular-calendar.css"
             ],
             "scripts": []
           },
@@ -64,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Extreme:build:production"
+              "buildTarget": "Xtreme:build:production"
             },
             "development": {
-              "buildTarget": "Extreme:build:development"
+              "buildTarget": "Xtreme:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Extreme:build"
+            "buildTarget": "Xtreme:build"
           }
         },
         "test": {

@@ -1,0 +1,92 @@
+.row-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.mat-progress-bar {
+  margin-bottom: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.stages {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.stage-time {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stage-details {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stage-duration {
+  color: gray;
+  font-size: 12px;
+}
+
+.action-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Estilo Responsivo */
+@media (max-width: 768px) {
+  .row-container {
+    margin: 10px 0;
+    padding: 8px;
+  }
+
+  .mat-progress-bar {
+    height: 8px;
+  }
+
+  .stages {
+    flex-direction: column; /* Apilar etapas en lugar de mostrarlas en línea */
+    gap: 15px;
+  }
+
+  .stage-container {
+    margin: 10px 0;
+  }
+
+  .stage-time {
+    font-size: 14px;
+  }
+
+  .stage-details {
+    font-size: 14px;
+  }
+
+  .stage-duration {
+    font-size: 12px;
+  }
+
+  .action-button {
+    justify-content: center; /* Centrar el botón en móviles */
+    margin-top: 15px;
+  }
+
+  button {
+    width: 100%; /* Hacer que el botón ocupe todo el ancho disponible */
+  }
+}
