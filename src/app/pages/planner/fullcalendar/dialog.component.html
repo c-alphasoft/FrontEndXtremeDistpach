@@ -7,7 +7,7 @@
       <!-- col -->
       <div class="col-12">
         <mat-form-field appearance="outline" class="w-100">
-          <input matInput placeholder="Edite Cliente" [(ngModel)]="data?.event.client">
+          <input matInput placeholder="Edite Cliente" [(ngModel)]="data?.event.title">
         </mat-form-field>
       </div>
       <!-- col -->
@@ -42,20 +42,20 @@
       <div class="row">
         <!-- col -->
         <div class="col-12">
-          <mat-form-field appearance="outline" class="w-100">
-            <input matInput placeholder="Edite Cliente" [(ngModel)]="data?.event.client">
+          <mat-form-field appearance="outline" class="w-100"> 
+            <input matInput placeholder="Cliente" [value]="data?.event.title" readonly>
           </mat-form-field>
         </div>
         <!-- col -->
         <div class="col-12">
           <mat-form-field appearance="outline" class="w-100">
-            <input matInput placeholder="Edite Producto" [(ngModel)]="data?.event.product">
+            <input matInput placeholder="Producto" [value]="data?.event.product" readonly>
           </mat-form-field>
         </div>
         <!-- col -->
         <div class="col-12">
           <mat-form-field appearance="outline" class="w-100">
-            <input matInput placeholder="Edite Volumen" [(ngModel)]="data?.event.volume">
+            <input matInput placeholder="Volumen" [value]="data?.event.volume" readonly>
           </mat-form-field>
         </div>
   
