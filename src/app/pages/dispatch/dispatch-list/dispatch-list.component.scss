@@ -1,25 +1,55 @@
+/* General */
 table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.expanded-table {
+  width: 100%;
+}
+
+.expanded-table th,
+.expanded-table td {
+  text-align: center;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .table-responsive-sm {
+    overflow-x: auto;
+  }
+
+  .expanded-content {
+    display: block;
     width: 100%;
+    padding: 8px;
   }
-  
-  tr.example-detail-row {
-    height: 0;
-  
+
+  table {
+    font-size: 12px;
   }
-  
-  .example-element-row td {
-    border-bottom-width: 0;
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
   }
-  
 
   .expanded-table {
-    width: 100%;
+    display: block;
+    font-size: 10px;
   }
-  
-  .expanded-table th {
-    text-align: center;
-  }
-  
+
+  .expanded-table th,
   .expanded-table td {
-    text-align: center;
+    text-align: left;
+    padding: 4px;
   }
+}

@@ -2,71 +2,69 @@
     <mat-card-content>
         <div class="m-t-30 table-responsive-sm">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
-                @for(column of columnsToDisplay; track column) {
-                <ng-container matColumnDef="{{ column }}">
-                    <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14 p-x-24 p-l-0">
-                        {{ column | titlecase }}
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="p-x-24 f-s-14 p-l-0">
-                        {{ element[column] }}
-                    </td>
+                <!-- Columnas dinámicas -->
+                <ng-container *ngFor="let column of columnsToDisplay">
+                    <ng-container matColumnDef="{{ column }}">
+                        <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14 p-x-24 p-l-0">
+                            {{ column | titlecase }}
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="p-x-24 f-s-14 p-l-0">
+                            {{ element[column] }}
+                        </td>
+                    </ng-container>
                 </ng-container>
-                }
 
+                <!-- Botón expandir -->
                 <ng-container matColumnDef="expand">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">
                         &nbsp;
                     </th>
                     <td mat-cell *matCellDef="let element">
                         <button mat-icon-button aria-label="expand row"
-                            (click)="expandedElement = expandedElement === element ? null : element;$event.stopPropagation()">
-                            @if(expandedElement !== element) {
-                            <mat-icon>keyboard_arrow_down</mat-icon>
-                            } @if(expandedElement === element) {
-                            <mat-icon>keyboard_arrow_up</mat-icon>
-                            }
+                            (click)="expandedElement = expandedElement === element ? null : element; $event.stopPropagation()">
+                            <mat-icon>
+                                {{ expandedElement !== element ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+                            </mat-icon>
                         </button>
                     </td>
                 </ng-container>
 
-                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <!-- Contenido expandido -->
                 <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                        <div [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length + 1">
+                        <div class="expanded-content"
+                            [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
                             <div class="p-15 rounded b-1 m-b-16 m-x-18">
-                                <div class="d-flex align-items-center gap-12">
-                                    <table class="expanded-table">
-                                        <thead>
-                                            <tr>
-                                                <th class="f-w-600 mat-subtitle-1 f-s-14 p-x-24 p-l-0">Sello</th>
-                                                <th class="f-w-600 mat-subtitle-1 f-s-14 p-x-24 p-l-0">Detalle</th>
-                                                <th class="f-w-600 mat-subtitle-1 f-s-14 p-x-24 p-l-0">Volumen</th>
-                                                <th class="f-w-600 mat-subtitle-1 f-s-14 p-x-24 p-l-0">Camión</th>
-                                                <th class="f-w-600 mat-subtitle-1 f-s-14 p-x-24 p-l-0">Estado</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>{{ element.sello }}</td>
-                                                <td>{{ element.detalle }}</td>
-                                                <td>{{ element.volumen }}</td>
-                                                <td>{{ element.camion }}</td>
-                                                <td>{{ element.estado }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <table class="expanded-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sello</th>
+                                            <th>Detalle</th>
+                                            <th>Volumen</th>
+                                            <th>Camión</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ element.sello }}</td>
+                                            <td>{{ element.detalle }}</td>
+                                            <td>{{ element.volumen }}</td>
+                                            <td>{{ element.camion }}</td>
+                                            <td>{{ element.estado }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </td>
                 </ng-container>
 
-
+                <!-- Filas -->
                 <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
                 <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand" class="example-element-row"
                     [class.example-expanded-row]="expandedElement === element"
-                    (click)="expandedElement = expandedElement === element ? null : element">
-                </tr>
+                    (click)="expandedElement = expandedElement === element ? null : element"></tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
             </table>
         </div>

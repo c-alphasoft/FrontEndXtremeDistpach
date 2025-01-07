@@ -1,24 +1,26 @@
 <div *ngFor="let row of data" class="row-container" [ngStyle]="{ 'border-left': '5px solid ' + row.color }">
     <!-- Barra de Progreso -->
     <mat-progress-bar mode="determinate" [value]="row.progress"
-        [color]="row.color === 'green' ? 'primary' : row.color === 'yellow' ? 'warn' : 'accent'"></mat-progress-bar>
-
+      [color]="row.color === 'green' ? 'primary' : row.color === 'yellow' ? 'warn' : 'accent'">
+    </mat-progress-bar>
+  
     <!-- Etapas -->
     <div class="stages">
-        <div class="stage-container" *ngFor="let stage of row.stages">
-            <div class="stage-time">{{ stage.time }}</div>
-            <div class="stage-details">
-                <mat-icon>directions_car</mat-icon>
-                <span>{{ stage.label }}</span>
-            </div>
-            <div class="stage-duration">{{ stage.duration }}</div>
+      <div class="stage-container" *ngFor="let stage of row.stages">
+        <div class="stage-time">{{ stage.time }}</div>
+        <div class="stage-details">
+          <mat-icon>directions_car</mat-icon>
+          <span>{{ stage.label }}</span>
         </div>
+        <div class="stage-duration">{{ stage.duration }}</div>
+      </div>
     </div>
-
+  
     <!-- Botón de Acción -->
     <div class="action-button">
-        <button mat-raised-button color="primary" (click)="onAction(row)">
-            Realizar Acción
-        </button>
+      <button mat-raised-button color="primary" (click)="onAction(row)">
+        Realizar Acción
+      </button>
     </div>
-</div>
+  </div>
+  
