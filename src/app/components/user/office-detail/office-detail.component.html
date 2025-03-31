@@ -1,0 +1,165 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content class="p-24">
+        <form name="eventForm" class="event-form">
+            <mat-card class="cardWithShadow">
+                <mat-card-content>
+                    <div class="d-flex align-items-center">
+                        <mat-card-title class="m-b-0"> {{receivedData.action}} de Pedido </mat-card-title>
+                        <div class="ml-auto d-flex gap-10">
+                            <a routerLink="/user/solicitud" mat-stroked-button color="warn" class="m-r-10">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <div class="row m-y-24 p-t-24">
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Orden</mat-label>
+                        <input matInput name="productName"
+                            [value]="receivedData.date.meta.productName ? receivedData.date.meta.productName : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Cliente</mat-label>
+                        <input matInput name="client"
+                            [value]="receivedData.date.meta.client ? receivedData.date.meta.client : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email</mat-label>
+                        <input matInput name="email"
+                            [value]="receivedData.date.meta.order.clientEmail ? receivedData.date.meta.order.clientEmail : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Solicitante</mat-label>
+                        <input matInput name="applicant"
+                            [value]="receivedData.date.meta.order.applicant ? receivedData.date.meta.order.applicant : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Coordinador de Hormigón</mat-label>
+                        <input matInput name="coordinator_concrete"
+                            [value]="receivedData.date.meta.order.coordinator_concrete ? receivedData.date.meta.order.coordinator_concrete : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Frecuencia Radial</mat-label>
+                        <input matInput name="frequency_radial"
+                            [value]="receivedData.date.meta.order.frequency_radial ? receivedData.date.meta.order.frequency_radial : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Destino Final</mat-label>
+                        <input matInput name="final_destination"
+                            [value]="receivedData.date.meta.order.final_destination ? receivedData.date.meta.order.final_destination : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Punto de Entrega</mat-label>
+                        <input matInput name="point_delivery"
+                            [value]="receivedData.date.meta.order.point_delivery ? receivedData.date.meta.order.point_delivery : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Código Producto</mat-label>
+                        <input matInput name="cod_product"
+                            [value]="receivedData.date.meta.order.cod_product ? receivedData.date.meta.order.cod_product : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Producto</mat-label>
+                        <input matInput name="product"
+                            [value]="receivedData.date.meta.order.product ? receivedData.date.meta.order.product : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Hora de Entrega</mat-label>
+                        <input matInput name="time_delivery"
+                            [value]="receivedData?.date?.meta?.order?.time_delivery ? (receivedData.date.meta.order.time_delivery | date: 'HH:mm') : ''"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>M3</mat-label>
+                        <input matInput name="m3"
+                            [value]="receivedData.date.meta.order.m3 ? receivedData.date.meta.order.m3 : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Frecuencia Despacho</mat-label>
+                        <input matInput name="dispatch_frequency"
+                            [value]="receivedData.date.meta.order.dispatch_frequency ? receivedData.date.meta.order.dispatch_frequency : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Observación</mat-label>
+                        <input matInput name="applicant"
+                            [value]="receivedData.date.meta.order.observation ? receivedData.date.meta.order.observation : 'Sin información'"
+                            readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table mat-table [dataSource]=" receivedData.date.meta.order.statusRequests" class="w-100">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">#</th>
+                        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="dateDelivery">
+                        <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Día Entrega</th>
+                        <td mat-cell *matCellDef="let element">{{ element.timeDelivery | date: 'yyyy-MM-dd'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="timeDelivery">
+                        <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Hora Entrega</th>
+                        <td mat-cell *matCellDef="let element" class="f-s-14">{{ element.timeDelivery | date: 'HH:mm' }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="m3">
+                        <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">M3</th>
+                        <td mat-cell *matCellDef="let element" class="f-s-14">{{ element.m3 }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="shift">
+                        <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Turno</th>
+                        <td mat-cell *matCellDef="let element" class="f-s-14">{{ element.shift }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Estado</th>
+                        <td mat-cell *matCellDef="let element" class="f-s-14">{{ element.status.name }}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

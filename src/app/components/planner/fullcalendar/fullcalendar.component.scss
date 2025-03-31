@@ -1,0 +1,190 @@
+.no-shadow {
+  box-shadow: none;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+/* Contenedor principal del evento */
+[mwldraggable] {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Círculo predeterminado del calendario */
+.event-container .cal-event {
+  width: 12px !important;
+  height: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Texto del evento */
+.event-text {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.green-icon {
+  color: #51ab24 !important; // Usamos !important para forzar el estilo
+}
+
+/// template
+// Variables SCSS
+$primary-color: #2c3e50;
+$secondary-color: #7f8c8d;
+$tertiary-color: #51ab24;
+$icon-color: #95a5a6;
+$spacing: 0.5rem;
+
+.event-container {
+  &.turno-a {
+    border-left-color: #53e609; // Verde para Turno A
+  }
+
+  &.turno-b {
+    border-left-color: #5d87ff; // Azul para Turno B
+  }
+}
+
+.event-container {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background: white;
+  border-left: 4px solid;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  .event-content {
+    display: flex;
+    align-items: center;
+    gap: $spacing * 1.5;
+    font-size: 0.9em;
+
+    .product-name,
+    .client-info,
+    .delivery-time {
+      padding-right: $spacing * 1.5; // Espacio a la derecha de cada campo
+      border-right: 1px solid $secondary-color; // Línea vertical
+    }
+
+    .product-name:last-child,
+    .client-info:last-child,
+    .delivery-time:last-child {
+      border-right: none; // Eliminar la línea del último elemento
+    }
+
+    .product-name {
+      font-weight: 600;
+      color: $primary-color;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .client-info {
+      display: flex;
+      align-items: center;
+      gap: $spacing * 0.5;
+      color: $secondary-color;
+
+      .client-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        color: $icon-color;
+      }
+    }
+
+    .delivery-time {
+      background: lighten($secondary-color, 35%);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.85em;
+      color: darken($secondary-color, 15%);
+    }
+  }
+}
+
+/* Permitir scroll horizontal en móviles */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
+}
+
+/* Aplicar scroll horizontal en pantallas pequeñas */
+@media (max-width: 768px) {
+  .event-container {
+    display: flex;
+    flex-wrap: nowrap; /* Evita que se acomoden en varias líneas */
+    overflow-x: auto; /* Activa el scroll horizontal */
+    white-space: nowrap; /* Evita que el texto se corte */
+    padding-bottom: 10px;
+  }
+
+  .event-content {
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: 750px; /* Evita que se achique demasiado */
+  }
+
+  /* Asegura que cada bloque de información mantenga su tamaño */
+  .product-name,
+  .client-info,
+  .delivery-time {
+    flex: 0 0 auto; /* Evita que se reduzcan */
+    padding-right: 10px; /* Espacio entre elementos */
+  }
+
+  /* Asegurar que el calendario y su contenedor sean desplazables */
+  mwl-calendar-month-view,
+  mwl-calendar-week-view,
+  mwl-calendar-day-view {
+    overflow-x: auto;
+    display: block;
+    min-width: 750px; /* Evita que se encimen */
+  }
+}
+
+.action-link {
+  display: flex;
+  align-items: center;
+  gap: 8px; // Espacio entre los iconos
+  padding-right: $spacing * 1.5; // Espacio a la derecha de cada campo
+  border-right: 1px solid $secondary-color; // Línea vertical
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.icon-18 {
+  width: 18px;
+  height: 18px;
+}
+
+.event-container .action-link i-tabler {
+  display: inline-block !important; /* Forzar que los iconos se muestren */
+  visibility: visible !important; /* Asegurar que no estén ocultos */
+  color: #000 !important; /* Color negro para asegurar visibilidad */
+}
+
+.edit-icon svg {
+  color: #2196f3 !important;
+}
+
+.delete-icon svg {
+  color: #f44336 !important;
+}

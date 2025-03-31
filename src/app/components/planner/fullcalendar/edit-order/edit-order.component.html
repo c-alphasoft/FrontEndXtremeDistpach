@@ -1,0 +1,148 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content class="p-24">
+        <form name="eventForm" [formGroup]="eventForm" class="event-form" (ngSubmit)="saveOrder()">
+            <mat-card class="cardWithShadow">
+                <mat-card-content>
+                    <div class="d-flex align-items-center">
+                        <mat-card-title class="m-b-0">Editar Pedido</mat-card-title>
+                        <div class="ml-auto d-flex gap-10">
+                            <a routerLink="/admin/planner/calendar" mat-stroked-button color="warn" class="m-r-10">
+                                Cancelar
+                            </a>
+                            <button mat-raised-button color="primary" type="submit">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <div class="row m-y-24 p-t-24">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Cliente</mat-label>
+                        <mat-select formControlName="client" (selectionChange)="updateClientInfo($event.value)">
+                            @for (cliente of clientes; track cliente) {
+                            <mat-option [value]="cliente.customer">{{cliente.customer}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Solicitante</mat-label>
+                        <input matInput placeholder="solicitante" formControlName="applicant" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Solicitante</mat-label>
+                        <input matInput placeholder="solicitante" formControlName="applicant" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Coordinador de Hormigón</mat-label>
+                        <input matInput formControlName="coordinator_concrete" placeholder="Coordinador de Hormigón"
+                            required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Frecuencia Radial</mat-label>
+                        <input matInput formControlName="frequency_radial" placeholder="Frecuencia Radial" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Destino Final</mat-label>
+                        <input matInput formControlName="final_destination" placeholder="Destino Final" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Punto de Entrega</mat-label>
+                        <input matInput formControlName="point_delivery" placeholder="Punto de Entrega" required />
+                        <mat-error *ngIf="eventForm.get('point_delivery')?.hasError('required')">
+                            Campo obligatorio
+                        </mat-error>
+                        <mat-error *ngIf="eventForm.get('point_delivery')?.hasError('minTime')">
+                            Hora inválida
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Código Producto</mat-label>
+                        <mat-select formControlName="cod_product" (selectionChange)="updateProductName($event.value)">
+                            @for (codigo_producto of productos; track codigo_producto) {
+                            <mat-option [value]="codigo_producto.codProduct">{{codigo_producto.codProduct}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Producto</mat-label>
+                        <input matInput formControlName="product" placeholder="Producto" required readonly />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput [matDatepicker]="startDateDP" placeholder="Fecha de inicio" name="startDate"
+                            formControlName="application_date">
+                        <mat-datepicker-toggle class="add-event-date" matSuffix [for]="startDateDP" />
+                        <mat-datepicker #startDateDP />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Hora de Entrega</mat-label>
+                        <input matInput [ngxMatTimepicker]="timepicker" [format]="12" [required]="required" readonly
+                            formControlName="time_delivery" />
+                        <mat-icon matPrefix
+                            *ngIf="eventForm.get('time_delivery')?.value && !eventForm.get('time_delivery')?.disabled && !required"
+                            (click)="onClear($event)">
+                            close
+                        </mat-icon>
+                        <mat-icon matSuffix *ngIf="!eventForm.get('time_delivery')?.disabled"
+                            (click)="openFromIcon(timepicker)">
+                            schedule
+                        </mat-icon>
+                    </mat-form-field>
+                    <ngx-mat-timepicker #timepicker></ngx-mat-timepicker>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>M3</mat-label>
+                        <input matInput formControlName="m3" placeholder="m3" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Frecuencia Despacho</mat-label>
+                        <input matInput formControlName="dispatch_frequency" placeholder="Frecuencia Despacho"
+                            required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Observación</mat-label>
+                        <input matInput formControlName="observation" placeholder="Observación" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Turno</mat-label>
+                        <mat-select formControlName="thunder">
+                            @for (turno of turnos; track turno) {
+                            <mat-option [value]="turno.value">{{turno.viewValue}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

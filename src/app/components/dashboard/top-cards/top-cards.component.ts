@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MaterialModule } from 'src/app/material.module';
+import { MaterialModule } from '../../../material.module';
 
 interface topcards {
   id: number;

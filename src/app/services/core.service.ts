@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { AppSettings, defaults } from '../config';
+import { AppSettings, defaults } from '../modules/interfaces/app_settings';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +24,9 @@ export class CoreService {
 
   getLanguage() {
     return this.getOptions().language;
+  }
+
+  getUserRole(): string {
+    return sessionStorage.getItem('userRole') || 'guest';
   }
 }

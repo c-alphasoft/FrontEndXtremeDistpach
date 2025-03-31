@@ -1,0 +1,100 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content>
+        <div class="d-flex align-items-center">
+            <mat-card-title class="m-b-0">Solicitud Hormigón</mat-card-title>
+            <div class="ml-auto">
+                <button mat-flat-button color="primary" (click)="addEvent()">
+                    Solicitar Pedido
+                </button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="cardWithShadow overflow-hidden">
+    <mat-toolbar color="primary" class="no-shadow">
+        <mat-toolbar-row>
+            <div class="d-flex align-items-center w-100">
+                <span>{{viewDate() | calendarDate : view() + "ViewTitle" : "es"}}</span>
+                <div class="ml-auto d-flex align-items-center">
+                    <button class="text-white" mat-icon-button (click)="setView('month')"
+                        [class.active]="view() === 'month'">
+                        <mat-icon>view_module</mat-icon>
+                    </button>
+                    <button class="text-white" mat-icon-button (click)="setView('week')"
+                        [class.active]="view() === 'week'">
+                        <mat-icon>view_week</mat-icon>
+                    </button>
+                    <button class="text-white" mat-icon-button (click)="setView('day')"
+                        [class.active]="view() === 'day'">
+                        <mat-icon>view_day</mat-icon>
+                    </button>
+
+                    <button class="text-white" mat-icon-button mwlCalendarPreviousView (click)="goToPreviousMonth()">
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
+                    <button class="text-white" mat-icon-button mwlCalendarToday (click)="goToToday()">
+                        <mat-icon>today</mat-icon>
+                    </button>
+                    <button class="text-white" mat-icon-button mwlCalendarNextView (click)="goToNextMonth()">
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <ng-template #customEventTemplate let-event="event" class="table-responsive">
+        <div class="event-container"
+            [ngClass]="{'turno-a': event.meta.turno === 'A', 'turno-b': event.meta.turno === 'B'}">
+            <div class="event-content">
+                <div class="action-link">
+                    <i-tabler name="edit" class="icon-18 edit-icon"
+                        (click)="editEvent(event, event.meta.order.idorders)" title="Editar" aria-label="Editar pedido"
+                        style="cursor: pointer"></i-tabler>
+                    <i-tabler name="trash" class="icon-18 delete-icon"
+                        (click)="deleteEvent(event, event.meta.order.idorders)" title="Eliminar"
+                        aria-label="Eliminar pedido" style="cursor: pointer"></i-tabler>
+                </div>
+                <button mat-button class="product-name" (click)="handleEvent('Detalle', event)">
+                    {{ event.meta.productName }}
+                </button>
+                <button mat-button class="client-info" (click)="handleEvent('Detalle', event)">
+                    <mat-icon class="client-icon">person</mat-icon>
+                    {{ event.meta.client }}
+                </button>
+                <button class="client-info" mat-button *ngFor="let detalle of event.meta.detallesDespachos"
+                    (click)="handleEvent('Detalle', event)">
+                    {{ detalle.horaEntrega | date:'shortTime' }} - {{ detalle.m3 }} m³
+                    <mat-icon class="client-icon green-icon">local_shipping</mat-icon>
+                </button>
+                <span class="delivery-time">{{ event.meta.m3 }} - m3 </span>
+                <span class="delivery-time">{{ event.meta.dispatch_frequency }} - F </span>
+                <span class="client-info">
+                    <mat-icon class="client-icon">location_on</mat-icon>
+                    {{ event.meta.final_destination }}
+                </span>
+                <span class="delivery-time">{{ event.meta.status }}</span>
+            </div>
+        </div>
+    </ng-template>
+
+    <mat-card-content>
+        <div [ngSwitch]="view()">
+            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate()" [events]="events()" [locale]="'es'"
+                [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen()" (dayClicked)="dayClicked($event.day)"
+                (eventTimesChanged)="eventTimesChanged($event)" [eventTitleTemplate]="customEventTemplate">
+            </mwl-calendar-month-view>
+
+            <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate()" [events]="events()" [locale]="'es'"
+                [refresh]="refresh" (eventClicked)="handleEvent('Detalle', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-week-view>
+
+            <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate()" [events]="events()" [locale]="'es'"
+                [refresh]="refresh" (eventClicked)="handleEvent('Detalle', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-day-view>
+        </div>
+    </mat-card-content>
+</mat-card>

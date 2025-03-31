@@ -1,0 +1,37 @@
+<mat-sidenav-container class="mainWrapper" autosize autoFocus>
+    <!-- ============================================================== -->
+    <!-- Sidebar -->
+    <!-- ============================================================== -->
+    <mat-sidenav #leftsidenav class="sidebarNav" [mode]="isOver ? 'over' : 'side'"
+        [opened]="options.navPos === 'side' && options.sidenavOpened && !isOver && !resView"
+        (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()">
+        <div class="flex-layout">
+            <app-sidebar (toggleMobileNav)="sidenav.toggle()" [showToggle]="isOver"></app-sidebar>
+            <ng-scrollbar class="position-relative" style="height: 100%">
+                <mat-nav-list class="sidebar-list">
+                    @for(item of navItems; track item) {
+                    <app-nav-item [item]="item" (notify)="sidenav.toggle()" />
+                    } 
+                </mat-nav-list>
+            </ng-scrollbar>
+        </div>
+    </mat-sidenav>
+
+    <!-- ============================================================== -->
+    <!-- Main Content -->
+    <!-- ============================================================== -->
+    <mat-sidenav-content class="contentWrapper" #content>
+        <!-- ============================================================== -->
+        <!-- Header -->
+        <!-- ============================================================== -->
+        @if (!options.horizontal) {
+        <app-header [showToggle]="!isOver" (toggleCollapsed)="toggleCollapsed()" (toggleMobileNav)="sidenav.toggle()" />
+        }
+        <main class="pageWrapper" [ngClass]="{maxWidth: options.boxed}">
+            <app-breadcrumb />
+            <!-- Outlet -->
+            <router-outlet></router-outlet>
+        </main>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

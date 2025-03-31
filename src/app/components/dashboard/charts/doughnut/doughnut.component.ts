@@ -47,8 +47,8 @@ export class DoughnutComponent {
   constructor() {
     //doughnut chart.
     this.doughnutChartOptions = {
-      series: [45, 15],
-      labels: ['Aprobados', 'Rechazados'],
+      series: [45, 15, 23],
+      labels: ['Real', 'Confirmado', 'Programado'],
       chart: {
         id: 'donut-chart',
         type: 'donut',
@@ -71,7 +71,7 @@ export class DoughnutComponent {
         position: 'bottom',
         width: '50px',
       },
-      colors: ['#06d79c', '#d70606'],
+      colors: ['#06d79c', '#d70606', '#faf02f'],
       tooltip: {
         theme: 'dark',
         fillSeriesColor: false,

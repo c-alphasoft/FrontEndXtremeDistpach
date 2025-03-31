@@ -48,66 +48,69 @@ export class ColumnComponent {
     this.columnChartOptions = {
       series: [
         {
-          name: 'Aprobados',
-          data: [400, 120, 140, 320, 200, 450, 340, 430, 400, 520, 240, 450],
+          name: "Programado",
+          data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 56, 40, 62]
         },
         {
-          name: 'Rechazados',
-          data: [200, 88, 142, 300, 200, 400, 230, 300, 200, 400, 180, 300],
+          name: "Real",
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 100, 140, 158]
         },
+        {
+          name: "Confirmado",
+          data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 54, 47, 32]
+        }
       ],
       chart: {
-        fontFamily: 'DM Sans,sans-serif',
-        foreColor: '#a1aab2',
-        height: 300,
-        type: 'bar',
-        stacked: true,
-        toolbar: {
-          show: false,
-        },
+        type: "bar",
+        height: 307
       },
       plotOptions: {
         bar: {
-          columnWidth: '40%',
-          barHeight: '40%',
-        },
+          horizontal: false,
+          columnWidth: "55%",
+          endingShape: "rounded"
+        }
       },
       dataLabels: {
-        enabled: true,
-      },
-      markers: {
-        size: 3,
+        enabled: false
       },
       stroke: {
-        curve: 'straight',
-        width: '0',
-      },
-      colors: ['#06d79c', '#d70606'],
-      legend: {
         show: true,
+        width: 2,
+        colors: ["transparent"]
       },
-      grid: {
-        show: true,
-        strokeDashArray: 0,
-        borderColor: 'rgba(0,0,0,0.1)',
-        xaxis: {
-          lines: {
-            show: true,
-          },
-        },
-        yaxis: {
-          lines: {
-            show: true,
-          },
-        },
-      },
+      colors: ['#faf02f', '#06d79c', '#d70606'],
       xaxis: {
-        type: 'category',
-        categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nob', 'Dic'],
+        categories: [
+          "Ene",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dic",
+        ]
+      },
+      yaxis: {
+        title: {
+          text: ""
+        }
+      },
+      fill: {
+        opacity: 1
       },
       tooltip: {
-        theme: 'dark',
-      },
+        y: {
+          formatter: function(val: string) {
+            return "$ " + val + " thousands";
+          }
+        }
+      }
     };
   }
 }
