@@ -19,13 +19,16 @@
                                     ORDEN: {{ order.codOrder }}
                                 </div>
                                 <div class="data-item data-label">
+                                    Despacho: {{ order.statusRequests[0].dispatchCode || 'N/A' }}
+                                </div>
+                                <div class="data-item data-label">
                                     Cliente: {{ order.client }}
                                 </div>
-                                <div class="data-item small-data">
+                                <div class="data-item data-label">
                                     M3: {{ order.statusRequests[0].m3 || 'N/A' }}
                                 </div>
                                 <div class="data-item data-label">
-                                    Despacho: {{ (order.statusRequests[0].dispatchTime | date: 'HH:mm') || 'N/A' }}
+                                    Carga: {{ (order.statusRequests[0].dispatchTime | date: 'HH:mm') || 'N/A' }}
                                 </div>
                                 <div class="data-item data-label">
                                     Entrega: {{ (order.statusRequests[0].timeDelivery | date: 'HH:mm') || 'N/A' }}

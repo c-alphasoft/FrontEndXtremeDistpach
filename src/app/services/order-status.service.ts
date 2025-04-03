@@ -51,6 +51,7 @@ export class OrderStatusService {
           statusRequests: order.statusRequests.map(
             (request: StatusRequest) => ({
               id: request.id,
+              dispatchCode: request.dispatchCode,
               dispatchTime: request.dispatchTime,
               timeDelivery: request.timeDelivery,
               m3: request.m3,

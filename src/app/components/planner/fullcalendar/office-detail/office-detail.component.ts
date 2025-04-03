@@ -16,7 +16,7 @@ export class OfficeDetailComponent implements OnInit {
   receivedData: any;
 
   displayedColumns: string[] = [
-    'id',
+    'dispatch_code',
     'dateDistpch',
     'dispatchTime',
     'dateDelivery',

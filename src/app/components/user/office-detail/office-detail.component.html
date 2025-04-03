@@ -131,9 +131,9 @@
             </div>
             <div class="table-responsive">
                 <table mat-table [dataSource]=" receivedData.date.meta.order.statusRequests" class="w-100">
-                    <ng-container matColumnDef="id">
+                    <ng-container matColumnDef="dispatch_code">
                         <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">#</th>
-                        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+                        <td mat-cell *matCellDef="let element">{{ element.dispatchCode }}</td>
                     </ng-container>
                     <ng-container matColumnDef="dateDelivery">
                         <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Día Entrega</th>

@@ -21,6 +21,12 @@
             <div class="row p-t-20">
                 <div class="col-sm-3 ">
                     <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>ID Despacho</mat-label>
+                        <input matInput formControlName="dispatch_code" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Hora Despacho</mat-label>
                         <input matInput formControlName="dispatchTime_dispatch" readonly>
                     </mat-form-field>
@@ -49,7 +55,7 @@
                         <input matInput formControlName="status_dispatch" readonly>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-9 ">
+                <div class="col-sm-6 ">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Observación</mat-label>
                         <input matInput formControlName="observation">

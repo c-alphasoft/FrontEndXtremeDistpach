@@ -24,6 +24,7 @@ export class Order {
     id: number;
     m3: number;
     shift: string;
+    dispatchCode: string;
     timeDelivery: string;
     dispatchTime: string;
     status: {
@@ -31,6 +32,4 @@ export class Order {
       name: string;
     };
   }>;
-
-
 }

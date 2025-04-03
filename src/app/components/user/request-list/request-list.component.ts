@@ -50,8 +50,7 @@ export class RequestListComponent implements OnInit {
     if (userDataStr) {
       try {
         const userData = JSON.parse(userDataStr);
-        const userEmail = userData.email; // Versión simple
-        console.log('Email del usuario:', userEmail);
+        const userEmail = userData.email;
         this.loadOrderScheduledAll(userEmail);
       } catch (error) {
         console.error('Error al parsear userData:', error);
@@ -64,7 +63,6 @@ export class RequestListComponent implements OnInit {
   loadOrderScheduledAll(userEmail: string) {
     this.orderService.getClientOrders(userEmail).subscribe((data: Order[]) => {
       this.events = data;
-      console.log('Datos recividos', this.events);
     });
   }
 }

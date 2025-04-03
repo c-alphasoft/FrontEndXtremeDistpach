@@ -16,7 +16,7 @@ export class OfficeDetailComponent implements OnInit {
   receivedData: any;
 
   displayedColumns: string[] = [
-    'id',
+    'dispatch_code',
     'dateDelivery',
     'timeDelivery',
     'm3',
@@ -28,5 +28,6 @@ export class OfficeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.receivedData = history.state.datos;
+    console.log('Datos recibidos:', this.receivedData);
   }
 }

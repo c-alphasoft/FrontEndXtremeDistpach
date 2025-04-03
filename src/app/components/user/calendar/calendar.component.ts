@@ -1,6 +1,5 @@
 import {
   Component,
-  ChangeDetectionStrategy,
   Inject,
   signal,
   LOCALE_ID,
@@ -39,7 +38,6 @@ import localeEs from '@angular/common/locales/es';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { MaterialModule } from '../../../material.module';
 import { Router } from '@angular/router';
-import { OrderStatusService } from '../../../services/order-status.service';
 import { Order } from '../../../modules/interfaces/order';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import Swal from 'sweetalert2';
@@ -115,7 +113,6 @@ export class CalendarComponent implements OnInit {
       try {
         const userData = JSON.parse(userDataStr);
         const userEmail = userData.email; // Versión simple
-        console.log('Email del usuario:', userEmail);
         this.loadOrdersByStatus(userEmail);
       } catch (error) {
         console.error('Error al parsear userData:', error);
@@ -132,6 +129,7 @@ export class CalendarComponent implements OnInit {
           this.transformOrderToEvent(order)
         );
         this.events.set([...this.events(), ...newEvents]);
+        console.log('Datos ', this.events);
         this.refresh.next(null);
         this.cdr.detectChanges();
       },

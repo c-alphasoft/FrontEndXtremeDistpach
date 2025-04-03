@@ -93,11 +93,13 @@ export class DispatchDetailComponent {
       return date.toISOString().split('T')[0];
     };
 
-    console.log('Datos recibidos para el formulario:', receivedData);
-
     // Crear el FormGroup con los valores correspondientes
     const formGroup = new UntypedFormGroup({
       m3_dispatch: new UntypedFormControl(dispatchData.m3, Validators.required),
+      dispatch_code: new UntypedFormControl(
+        dispatchData.dispatch_code,
+        Validators.required
+      ),
       m3Order: new UntypedFormControl(orderData.m3 || '', Validators.required),
       shift_dispatch: new UntypedFormControl(
         dispatchData.shift,
@@ -257,6 +259,7 @@ export class DispatchDetailComponent {
       statusRequests: [
         {
           id: this.receivedData.despacho.id,
+          dispatch_code: this.receivedData.despacho.dispatch_code,
           status: {
             id: 2,
             name: 'Aprobado',
