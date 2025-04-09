@@ -67,6 +67,7 @@ export class DispatchDetailComponent {
     const orderData = receivedData.order || {};
     // Extraer datos del despacho si existen
     const dispatchData = receivedData.despacho || {};
+    console.log('Datos recibidos', dispatchData.dispatchCode);
 
     // Función para formatear la hora a formato 12h AM/PM
     const formatTo12Hour = (dateTimeString: string): string => {
@@ -97,7 +98,7 @@ export class DispatchDetailComponent {
     const formGroup = new UntypedFormGroup({
       m3_dispatch: new UntypedFormControl(dispatchData.m3, Validators.required),
       dispatch_code: new UntypedFormControl(
-        dispatchData.dispatch_code,
+        dispatchData.dispatchCode,
         Validators.required
       ),
       m3Order: new UntypedFormControl(orderData.m3 || '', Validators.required),

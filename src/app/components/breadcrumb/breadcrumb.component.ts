@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Data, NavigationEnd, Router, RouterModule } from '@angular/router';
+import {
+  ActivatedRoute,
+  Data,
+  NavigationEnd,
+  Router,
+  RouterModule,
+} from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-breadcrumb',
-    standalone: true,
-    imports: [RouterModule],
-    templateUrl: './breadcrumb.component.html'
+  selector: 'app-breadcrumb',
+  standalone: true,
+  imports: [RouterModule],
+  templateUrl: './breadcrumb.component.html',
 })
 export class BreadcrumbComponent {
   pageInfo: Data | any = Object.create(null);
@@ -32,7 +38,7 @@ export class BreadcrumbComponent {
       .pipe(filter((route) => route.outlet === 'primary'))
       .pipe(mergeMap((route) => route.data))
       .subscribe((event) => {
-        this.titleService.setTitle(event['title'] + '- Xtreme Dispatch');
+        this.titleService.setTitle('Xtreme Dispatch');
         this.pageInfo = event;
       });
   }

@@ -2,12 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { BACKEND_URL } from '../config/config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatusRequestService {
-  private url: string = 'http://localhost:8080/api/orders/statusRequests';
+  //private url: string = 'http://localhost:8080/api/orders/statusRequests';
+  private url: string = `${BACKEND_URL}/api/orders/statusRequests`;
 
   constructor(private http: HttpClient, private router: Router) {}
 

@@ -2,12 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Order } from '../modules/interfaces/order';
+import { BACKEND_URL } from '../config/config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  private url: string = 'http://localhost:8080/api/orders';
+  //private url: string = 'http://localhost:8080/api/orders';
+  private url: string = `${BACKEND_URL}/api/orders`;
 
   constructor(private http: HttpClient) {}
 

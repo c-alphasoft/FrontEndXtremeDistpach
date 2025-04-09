@@ -16,6 +16,10 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   rememberMe: boolean = false;
+  usuario = 'testxtremedispatch@gmail.com';
+  usuario2 = 'xtremedispatch@gmail.com';
+  contrasena = 12345;
+  contrasena2 = 12345;
 
   constructor(private authService: AuthService, private routes: Router) {}
 
