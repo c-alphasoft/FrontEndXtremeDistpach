@@ -28,7 +28,9 @@
             "styles": [
               "src/styles.scss",
               "src/assets/scss/style.scss",
-              "node_modules/angular-calendar/css/angular-calendar.css"
+              "node_modules/angular-calendar/css/angular-calendar.css",
+              "node_modules/ngx-spinner/animations/ball-clip-rotate.css",
+              "node_modules/ngx-spinner/animations/line-spin-clockwise-fade.css"
             ],
             "scripts": []
           },

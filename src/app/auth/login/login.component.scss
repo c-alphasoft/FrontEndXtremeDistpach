@@ -1,0 +1,136 @@
+/* ------------ Estilos para pagina login --------------------- */
+.backImage {
+  background: url("/assets/images/backgrounds/login-bg-2.jpg") no-repeat center
+    center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
+.io-trans-75 {
+  background-color: rgba(255, 255, 255, 0.9);
+  max-width: 400px;
+  min-width: 350px;
+  border-radius: 12px;
+  padding: 1em;
+}
+
+.xtreme {
+  color: #f52222;
+}
+
+.io-btn {
+  /*
+      background-color: #1e9ece;
+      border-color: #107aa2;
+      color: white;
+      cursor: pointer;
+      */
+  background-color: #eeeeee;
+  border-color: #9d9d9d;
+  color: #7d7d7d;
+  cursor: pointer;
+}
+
+.io-btn:hover,
+.io-btn:active {
+  /*
+      background-color: #f7ba52;
+      border-color: #F4B04F;
+      color:white;
+      */
+  background-color: #42bae7;
+  border-color: #107aa2;
+  color: white;
+}
+
+.io-btn-discard {
+  background-color: #666666;
+  border-color: #474747;
+  color: white;
+  cursor: pointer;
+}
+
+#linear-gauge {
+  width: 80%;
+  height: 30%;
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 30%;
+  padding-bottom: 30%;
+  /* aspect ratio */
+  vertical-align: bottom;
+  overflow: hidden;
+}
+
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  margin-top: 50px;
+  left: 0;
+}
+
+svg text {
+  font-size: 0.8em;
+  font-family: sans-serif;
+}
+
+.io-btn-discard:hover,
+.io-btn-discard:active {
+  /*
+      background-color: #f7ba52;
+      border-color: #F4B04F;
+      color:white;
+      */
+  background-color: #707070;
+  border-color: #474747;
+  color: white;
+}
+
+.filter-green {
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%);
+}
+
+.io-tooltip {
+  background-color: white; // rgb(252, 252, 252);
+  /*
+      border-radius: 3px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(194, 194, 194);
+      */
+  font-size: 0.9rem;
+  opacity: 80%;
+  fill-opacity: 90%;
+  pointer-events: none;
+  //color: rgb(10, 95, 127);
+}
+
+.title-tooltip {
+  font-weight: bold;
+}
+
+#info-nodes {
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+  z-index: 100;
+}
+
+.foreignObject1 {
+  width: 18rem;
+  height: 100%;
+  pointer-events: none;
+}
+
+.io-logo {
+  font-family: Rubik-Medium, sans-serif !important;
+  outline: none !important;
+  cursor: pointer !important;
+}
+/* ------------ Fin estilos pagina login ------------------------ */

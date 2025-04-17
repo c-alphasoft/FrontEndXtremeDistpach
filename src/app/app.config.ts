@@ -26,6 +26,8 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,6 +50,8 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     importProvidersFrom(
       FormsModule,
+      BrowserAnimationsModule,
+      NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
       ReactiveFormsModule,
       MaterialModule,
       TablerIconsModule.pick(TablerIcons),

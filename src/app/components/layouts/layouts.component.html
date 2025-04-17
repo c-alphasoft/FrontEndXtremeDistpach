@@ -1,4 +1,5 @@
 <mat-sidenav-container class="mainWrapper" autosize autoFocus>
+
     <!-- ============================================================== -->
     <!-- Sidebar -->
     <!-- ============================================================== -->
@@ -11,7 +12,7 @@
                 <mat-nav-list class="sidebar-list">
                     @for(item of navItems; track item) {
                     <app-nav-item [item]="item" (notify)="sidenav.toggle()" />
-                    } 
+                    }
                 </mat-nav-list>
             </ng-scrollbar>
         </div>

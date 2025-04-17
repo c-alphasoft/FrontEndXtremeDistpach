@@ -2,14 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MaterialModule } from '../../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    RouterModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
+  ],
   templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   isLoading = false;
@@ -21,7 +29,11 @@ export class LoginComponent implements OnInit {
   contrasena = 12345;
   contrasena2 = 12345;
 
-  constructor(private authService: AuthService, private routes: Router) {}
+  constructor(
+    private authService: AuthService,
+    private routes: Router,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit() {
     // Cargar credenciales guardadas si existen
@@ -36,12 +48,16 @@ export class LoginComponent implements OnInit {
   }
 
   check(email: string, password: string) {
+    this.showSpinner();
+
     if (!email || !password) {
+      this.hideSpinner();
       Swal.fire('Error de validación', 'Email y password requeridos!', 'error');
       return;
     }
 
     if (!this.validateEmail(email)) {
+      this.hideSpinner();
       Swal.fire(
         'Error de validación',
         'El email no tiene un formato válido!',
@@ -86,11 +102,14 @@ export class LoginComponent implements OnInit {
         const route = userRoutes[login.user.toLowerCase()] || '/';
 
         this.routes.navigate([route]).then(() => {
-          location.reload();
+          setTimeout(() => {
+            this.hideSpinner();
+          }, 2000);
         });
       },
       error: (error) => {
         if (error.status === 401) {
+          this.hideSpinner();
           Swal.fire('Error en el Login', error.error.message, 'error');
         } else {
           throw error;
@@ -102,5 +121,12 @@ export class LoginComponent implements OnInit {
   validateEmail(email: string): boolean {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
+  }
+
+  showSpinner() {
+    this.spinner.show();
+  }
+  hideSpinner() {
+    this.spinner.hide();
   }
 }
