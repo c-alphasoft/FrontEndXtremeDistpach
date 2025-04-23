@@ -7,8 +7,8 @@ import { BACKEND_URL } from '../config/config';
   providedIn: 'root',
 })
 export class AuthService {
-  //private url: string = 'http://localhost:8080/login';
-  private url: string = `${BACKEND_URL}/login`;
+  private url: string = 'http://localhost:8080/login';
+  //private url: string = `${BACKEND_URL}/login`;
 
   constructor(private http: HttpClient) {}
 

@@ -49,7 +49,6 @@ export class RequestsComponent implements OnInit {
   loadOrderApprovedAll() {
     this.orderService.findApprovedAll().subscribe((data: Order[]) => {
       this.events = data;
-      console.log('Datos recividos', this.events);
     });
   }
 }

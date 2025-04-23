@@ -1,9 +1,11 @@
+import { Product } from './product';
+
 export class Customer {
-    idcustomer!: number;
-    customer!: string;
-    applicant!: string;
-    concrete_coordinator!: string;
-    radial_frequency!: string;
-    delivery_point!: string;
-    final_destinacion!: string;
+  customer!: string;
+  applicant!: string;
+  concreteCoordinator!: string;
+  radialFrequency!: string;
+  deliveryPoint!: string;
+  finalDestination!: string | null;
+  products!: Product[];
 }

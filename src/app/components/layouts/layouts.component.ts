@@ -15,7 +15,6 @@ import { NavItemComponent } from '../nav-item/nav-item.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { NavItemAdmin } from '../../modules/interfaces/nav-item-admin';
 import { navItemsUser } from '../../modules/data/sidebar-user';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -35,7 +34,6 @@ const BELOWMONITOR = 'screen and (max-width: 1023px)';
     NavItemComponent,
     HeaderComponent,
     BreadcrumbComponent,
-    NgxSpinnerModule,
   ],
   templateUrl: './layouts.component.html',
   encapsulation: ViewEncapsulation.None,
@@ -55,15 +53,12 @@ export class LayoutsComponent implements OnInit {
   navItems: NavItemAdmin[] = [];
 
   ngOnInit(): void {
-    this.showSpinner();
     const userDataStr = localStorage.getItem('userData');
 
     if (userDataStr) {
       this.userRol(userDataStr);
     } else {
-      this.router.navigate(['/authentication/login']).then(() => {
-        this.hideSpinner(); // 👈 Ocultar spinner si redirige
-      });
+      this.router.navigate(['/authentication/login']);
     }
   }
 
@@ -78,12 +73,9 @@ export class LayoutsComponent implements OnInit {
       } else {
         throw new Error('Rol no reconocido');
       }
-      this.hideSpinner();
     } catch (e) {
       console.error('Error:', e);
-      this.router.navigate(['/authentication/login']).then(() => {
-        this.hideSpinner();
-      });
+      this.router.navigate(['/authentication/login']);
     }
   }
 
@@ -109,8 +101,7 @@ export class LayoutsComponent implements OnInit {
   constructor(
     private settings: CoreService,
     private router: Router,
-    private breakpointObserver: BreakpointObserver,
-    private spinner: NgxSpinnerService
+    private breakpointObserver: BreakpointObserver
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -162,12 +153,5 @@ export class LayoutsComponent implements OnInit {
 
   resetCollapsedState(timer = 400) {
     setTimeout(() => this.settings.setOptions(this.options), timer);
-  }
-
-  showSpinner() {
-    this.spinner.show();
-  }
-  hideSpinner() {
-    this.spinner.hide();
   }
 }

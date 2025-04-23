@@ -67,7 +67,6 @@ export class DispatchDetailComponent {
     const orderData = receivedData.order || {};
     // Extraer datos del despacho si existen
     const dispatchData = receivedData.despacho || {};
-    console.log('Datos recibidos', dispatchData.dispatchCode);
 
     // Función para formatear la hora a formato 12h AM/PM
     const formatTo12Hour = (dateTimeString: string): string => {
@@ -217,8 +216,6 @@ export class DispatchDetailComponent {
   }
 
   updateOrderData(formData: any) {
-    console.log('Datos para guardar:', formData);
-
     // Función mejorada para conversión de fecha/hora
     const convertToDateTimeISO = (
       dateString: string,
@@ -284,7 +281,6 @@ export class DispatchDetailComponent {
       application_date: formData.application_date,
     };
 
-    console.log('Payload a enviar:', JSON.stringify(orderPayload, null, 2));
     this.StatusRequestService.updateStatusRequest(orderPayload).subscribe({
       next: (response) => {
         if (response.success) {

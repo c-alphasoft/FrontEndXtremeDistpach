@@ -1,6 +1,6 @@
 <mat-card class="cardWithShadow">
     <mat-card-content class="p-24">
-        <form name="eventForm" [formGroup]="eventForm" class="event-form" (ngSubmit)="onSubmit()">
+        <form name="eventForm" class="event-form" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
             <mat-card class="cardWithShadow">
                 <mat-card-content>
                     <div class="d-flex align-items-center">
@@ -22,7 +22,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Cliente</mat-label>
-                        <mat-select formControlName="client" (selectionChange)="updateClientInfo($event.value)">
+                        <mat-select formControlName="customer" (selectionChange)="updateClientInfo($event.value)">
                             @for (cliente of clientes; track cliente) {
                             <mat-option [value]="cliente.customer">{{cliente.customer}}</mat-option>
                             }
@@ -32,45 +32,39 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Solicitante</mat-label>
-                        <input matInput placeholder="solicitante" formControlName="applicant" required />
+                        <input matInput placeholder="solicitante" formControlName="applicant" readonly />
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Coordinador de Hormigón</mat-label>
-                        <input matInput formControlName="coordinator_concrete" placeholder="Coordinador de Hormigón"
-                            required />
+                        <input matInput formControlName="concreteCoordinator" placeholder="Coordinador de Hormigón"
+                            readonly />
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Frecuencia Radial</mat-label>
-                        <input matInput formControlName="frequency_radial" placeholder="Frecuencia Radial" required />
+                        <input matInput formControlName="radialFrequency" placeholder="Frecuencia Radial" readonly />
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Destino Final</mat-label>
-                        <input matInput formControlName="final_destination" placeholder="Destino Final" required />
+                        <input matInput formControlName="finalDestination" placeholder="Destino Final" readonly />
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Punto de Entrega</mat-label>
-                        <input matInput formControlName="point_delivery" placeholder="Punto de Entrega" required />
-                        <mat-error *ngIf="eventForm.get('point_delivery')?.hasError('required')">
-                            Campo obligatorio
-                        </mat-error>
-                        <mat-error *ngIf="eventForm.get('point_delivery')?.hasError('minTime')">
-                            Hora inválida
-                        </mat-error>
+                        <input matInput formControlName="deliveryPoint" placeholder="Punto de Entrega" readonly />
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Código Producto</mat-label>
-                        <mat-select formControlName="cod_product" (selectionChange)="updateProductName($event.value)">
-                            @for (codigo_producto of productos; track codigo_producto) {
+                        <mat-select formControlName="codProduct" (selectionChange)="updateProductName($event.value)">
+                            @for (codigo_producto of selectedCustomerProducts; track codigo_producto) {
                             <mat-option [value]="codigo_producto.codProduct">{{codigo_producto.codProduct}}</mat-option>
                             }
                         </mat-select>
@@ -79,7 +73,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Producto</mat-label>
-                        <input matInput formControlName="product" placeholder="Producto" required readonly />
+                        <input matInput formControlName="nameProduct" placeholder="Producto" readonly />
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -113,7 +107,7 @@
                         <input matInput formControlName="m3" placeholder="m3" required />
                     </mat-form-field>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4" *ngIf="showFrequencyField">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Frecuencia Despacho</mat-label>
                         <input matInput formControlName="dispatch_frequency" placeholder="Frecuencia Despacho"
@@ -124,16 +118,6 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Observación</mat-label>
                         <input matInput formControlName="observation" placeholder="Observación" required />
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Turno</mat-label>
-                        <mat-select formControlName="thunder">
-                            @for (turno of turnos; track turno) {
-                            <mat-option [value]="turno.value">{{turno.viewValue}}</mat-option>
-                            }
-                        </mat-select>
                     </mat-form-field>
                 </div>
             </div>

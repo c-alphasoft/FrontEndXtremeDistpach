@@ -36,13 +36,7 @@ export class HeaderComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {}
 
-  ngOnInit(): void {
-    this.spinner.show();
-    // Simula llamada async
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 2000);
-  }
+  ngOnInit(): void {}
 
   profiledd: profiledd[] = [
     {

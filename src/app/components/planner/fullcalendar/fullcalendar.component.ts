@@ -44,6 +44,7 @@ import { Order } from '../../../modules/interfaces/order';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import Swal from 'sweetalert2';
 import { OrderService } from '../../../services/order.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 const colors: any = {
   red: {
@@ -85,6 +86,7 @@ registerLocaleData(localeEs);
     MatDialogModule,
     MatFormFieldModule,
     TablerIconsModule,
+    NgxSpinnerModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es' },
@@ -108,10 +110,12 @@ export class AppFullcalendarComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private serviceStatus: OrderStatusService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.showSpinner();
     this.loadOrdersByStatus();
   }
 
@@ -124,6 +128,7 @@ export class AppFullcalendarComponent implements OnInit {
         this.events.set([...this.events(), ...newEvents]);
         this.refresh.next(null);
         this.cdr.detectChanges();
+        this.hideSpinner();
       },
       (error) => {
         console.error('Error al cargar las órdenes:', error);
@@ -369,5 +374,14 @@ export class AppFullcalendarComponent implements OnInit {
 
   goToToday() {
     this.viewDate.set(new Date());
+  }
+
+  showSpinner() {
+    this.spinner.show();
+  }
+  hideSpinner() {
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
   }
 }

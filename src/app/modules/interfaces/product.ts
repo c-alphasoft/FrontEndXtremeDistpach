@@ -1,7 +1,6 @@
 export class Product {
-    idproduct!: number;
-    codProduct!: string;
-    nameProduct!: string;
-    cod_product_soft!: string;
-    cod_producto_beton!: string;
+  codProduct!: string;
+  nameProduct!: string;
+  codProductSoft!: string;
+  codProductoBeton!: string;
 }

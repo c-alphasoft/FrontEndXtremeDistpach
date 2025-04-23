@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit {
         this.routes.navigate([route]).then(() => {
           setTimeout(() => {
             this.hideSpinner();
-          }, 2000);
+          }, 1500);
         });
       },
       error: (error) => {

@@ -7,6 +7,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
   standalone: true,
   imports: [RouterOutlet, NgxSpinnerModule],
   templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'Xtreme Distpach';

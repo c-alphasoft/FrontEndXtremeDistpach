@@ -14,8 +14,8 @@ import { BACKEND_URL } from '../config/config';
 })
 export class OrderStatusService {
   private Orders: Order[] = [];
-  //  private url: string = 'http://localhost:8080/api/orders/all-orders-by-shift';
-  private url: string = `${BACKEND_URL}/api/orders/all-orders-by-shift`;
+  private url: string = 'http://localhost:8080/api/orders/all-orders-by-shift';
+  //private url: string = `${BACKEND_URL}/api/orders/all-orders-by-shift`;
 
   constructor(private http: HttpClient) {}
 

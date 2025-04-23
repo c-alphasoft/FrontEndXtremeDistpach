@@ -8,8 +8,8 @@ import { BACKEND_URL } from '../config/config';
   providedIn: 'root',
 })
 export class StatusRequestService {
-  //private url: string = 'http://localhost:8080/api/orders/statusRequests';
-  private url: string = `${BACKEND_URL}/api/orders/statusRequests`;
+  private url: string = 'http://localhost:8080/api/orders/statusRequests';
+  //private url: string = `${BACKEND_URL}/api/orders/statusRequests`;
 
   constructor(private http: HttpClient, private router: Router) {}
 

@@ -8,8 +8,8 @@ import { BACKEND_URL } from '../config/config';
   providedIn: 'root',
 })
 export class CustomerService {
-  //private url: string = 'http://localhost:8080/api/customers';
-  private url: string = `${BACKEND_URL}/api/customers`;
+  private url: string = 'http://localhost:8080/api/customers';
+  //private url: string = `${BACKEND_URL}/api/customers`;
 
   constructor(private http: HttpClient) {}
 

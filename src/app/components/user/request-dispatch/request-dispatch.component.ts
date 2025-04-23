@@ -1,18 +1,10 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-  signal,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import {
+  FormBuilder,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  UntypedFormControl,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -22,19 +14,16 @@ import {
   provideNativeDateAdapter,
 } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import Swal from 'sweetalert2';
-import dayjs from 'dayjs';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { DateTime } from 'luxon';
 import { MaterialModule } from '../../../material.module';
 import { Customer } from '../../../modules/interfaces/customer';
 import { Product } from '../../../modules/interfaces/product';
-import { Turno } from '../../../modules/interfaces/thunder';
-import { CustomerService } from '../../../services/customer.service';
-import { ProductService } from '../../../services/product.service';
+import { UserService } from '../../../services/user.service';
+import { EmailCustomer } from '../../../modules/interfaces/emailCustomer';
+import Swal from 'sweetalert2';
 import { OrderService } from '../../../services/order.service';
-import { EgretCalendarEvent } from '../../planner/fullcalendar/event.model';
-import { Order } from '../../../modules/interfaces/order';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'app-request-dispatch',
@@ -55,68 +44,97 @@ import { Order } from '../../../modules/interfaces/order';
   providers: [provideNativeDateAdapter(), DatePipe],
 })
 export class RequestDispatchComponent implements OnInit {
-  @Output() onSave = new EventEmitter<any>();
+  @ViewChild('timepicker') timepicker: any;
+  eventForm: FormGroup = this.fb.group({});
   datosRecibidos: any;
-  eventForm: UntypedFormGroup;
-  event = signal<any>(null);
   clientes: Customer[] = [];
   productos: Product[] = [];
-
-  turnos: Turno[] = [
-    { value: 'A', viewValue: 'A' },
-    { value: 'B', viewValue: 'B' },
-  ];
-
+  customer: EmailCustomer[] = [];
   required: boolean = false;
+  showFrequencyField: boolean = false;
   maxTime: DateTime = DateTime.local().set({ hour: 16 });
   minTime: DateTime = DateTime.local().set({ hour: 14 });
 
-  @ViewChild('timepicker') timepicker: any;
-
   constructor(
-    private router: Router,
-    private customerService: CustomerService,
-    private productService: ProductService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
     private orderService: OrderService,
-    private cdr: ChangeDetectorRef
-  ) {
-    this.datosRecibidos = history.state?.datos || {};
+    private router: Router,
+    private userService: UserService
+  ) {}
 
-    this.event.set(
-      new EgretCalendarEvent({
-        start: this.datosRecibidos.date,
-      })
-    );
-    this.eventForm = this.buildEventForm(this.event());
-  }
-
-  ngOnInit(): void {
-    this.getCustomer();
-    this.getProduct();
+  ngOnInit() {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      this.getCustomer(userData.email);
+    } else {
+      console.log('❌ No hay datos de usuario en localStorage');
+      this.setDefaultTime();
+    }
     this.setDefaultTime();
   }
 
-  getCustomer(): void {
-    this.customerService.findAll().subscribe(
-      (data) => (this.clientes = data),
-      (error) => console.error('Error al cargar clientes', error)
-    );
+  getCustomer(email: any): void {
+    this.userService.findByCustomer(email).subscribe({
+      next: (user) => {
+        if (user?.customers?.length) {
+          this.initializeForm(user.customers[0]);
+          this.clientes = user.customers;
+          this.productos = user.customers[0].products;
+        }
+      },
+      error: (err) => console.error('Error al obtener cliente:', err),
+    });
   }
 
-  updateClientInfo(clientName: string): void {
-    const clienteSeleccionado = this.clientes.find(
-      (cliente) => cliente.customer === clientName
-    );
+  initializeForm(customerData: any): void {
+    const today = new Date();
+    this.eventForm = this.fb.group({
+      customer: [customerData.customer || '', Validators.required],
+      applicant: [customerData.applicant || '', Validators.required],
+      deliveryPoint: [customerData.deliveryPoint || '', Validators.required],
+      application_date: [today, Validators.required],
+      time_delivery: ['', Validators.required],
+      codProduct: ['', Validators.required],
+      nameProduct: ['', Validators.required],
+      m3: ['', Validators.required],
+      dispatch_frequency: [15],
+      observation: ['', Validators.required],
+      concreteCoordinator: [
+        customerData.concreteCoordinator || '',
+        Validators.required,
+      ],
+      radialFrequency: [
+        customerData.radialFrequency || '',
+        Validators.required,
+      ],
+      finalDestination: [
+        customerData.finalDestination || '',
+        Validators.required,
+      ],
+    });
 
-    if (clienteSeleccionado) {
-      this.eventForm.patchValue({
-        applicant: clienteSeleccionado.applicant || '',
-        coordinator_concrete: clienteSeleccionado.concrete_coordinator || '',
-        frequency_radial: clienteSeleccionado.radial_frequency || '',
-        final_destination: clienteSeleccionado.final_destinacion || '',
-        point_delivery: clienteSeleccionado.delivery_point || '',
-      });
-    }
+    this.eventForm.get('m3')?.valueChanges.subscribe((value) => {
+      const numericValue = parseFloat(value) || 0;
+      this.showFrequencyField = numericValue > 7;
+
+      const frequencyControl = this.eventForm.get('dispatch_frequency');
+
+      if (!this.showFrequencyField) {
+        frequencyControl?.setValue(15);
+        frequencyControl?.clearValidators();
+        frequencyControl?.disable();
+      } else {
+        frequencyControl?.enable();
+        frequencyControl?.setValidators([
+          Validators.required,
+          Validators.min(15),
+        ]);
+      }
+    });
+    this.eventForm.get('dispatch_frequency')?.disable();
+    this.cdr.detectChanges();
   }
 
   updateProductName(codProduct: string): void {
@@ -125,9 +143,15 @@ export class RequestDispatchComponent implements OnInit {
     );
 
     if (productoEncontrado) {
-      this.eventForm.get('product')?.setValue(productoEncontrado.nameProduct);
+      this.eventForm.patchValue({
+        codProduct: productoEncontrado.codProduct,
+        nameProduct: productoEncontrado.nameProduct,
+      });
     } else {
-      this.eventForm.get('product')?.setValue('');
+      this.eventForm.patchValue({
+        codProduct: '',
+        nameProduct: '',
+      });
     }
   }
 
@@ -135,54 +159,6 @@ export class RequestDispatchComponent implements OnInit {
     const now = DateTime.local().toFormat('HH:mm');
     this.eventForm.get('time_delivery')?.setValue(now);
     this.cdr.detectChanges();
-  }
-
-  buildEventForm(event: any): any {
-    if (!event) {
-      event = {};
-    }
-    const formattedDate = event.start ? new Date(event.start) : null;
-    const formGroup = new UntypedFormGroup({
-      client: new UntypedFormControl(event.client, Validators.required),
-      applicant: new UntypedFormControl(event.applicant, Validators.required),
-      product: new UntypedFormControl(event.product, Validators.required),
-      thunder: new UntypedFormControl(event.thunder, Validators.required),
-      m3: new UntypedFormControl(event.m3, Validators.required),
-      application_date: new UntypedFormControl(formattedDate),
-      dispatch_frequency: new UntypedFormControl(
-        event.dispatch_frequency,
-        Validators.required
-      ),
-      cod_product: new UntypedFormControl(
-        event.cod_product,
-        Validators.required
-      ),
-      coordinator_concrete: new UntypedFormControl(
-        event.coordinator_concrete,
-        Validators.required
-      ),
-      frequency_radial: new UntypedFormControl(
-        event.frequency_radial,
-        Validators.required
-      ),
-      point_delivery: new UntypedFormControl(
-        event.point_delivery,
-        Validators.required
-      ),
-      final_destination: new UntypedFormControl(
-        event.final_destination,
-        Validators.required
-      ),
-      observation: new UntypedFormControl(
-        event.observation,
-        Validators.required
-      ),
-      time_delivery: new UntypedFormControl(
-        event.time_delivery || '',
-        Validators.required
-      ),
-    });
-    return formGroup;
   }
 
   openFromIcon(timepicker: { open: () => void }) {
@@ -195,109 +171,69 @@ export class RequestDispatchComponent implements OnInit {
     this.eventForm.get('time_delivery')?.reset();
   }
 
-  getProduct(): void {
-    this.productService.findAll().subscribe(
-      (data) => {
-        this.productos = data;
-      },
-      (error) => {
-        console.error('Error al cargar productos:', error);
-      }
-    );
-  }
-
   onSubmit(): void {
-    if (this.eventForm.valid) {
-      const formData = this.eventForm.value;
-      const isValid = this.validateFormData(formData);
-      if (isValid) {
-        this.addOrderData(this.eventForm.value);
-      }
+    if (!this.eventForm.valid) {
+      console.warn('⚠️ Formulario inválido');
+      return;
+    }
+
+    const formData = this.eventForm.getRawValue();
+    const isValid = this.validateFormData(formData);
+
+    if (isValid) {
+      this.addOrderData(formData);
     }
   }
 
-  addOrderData(order_obj: Order): void {
-    // Recuperar los datos del localStorage
-    let userEmail = '';
-    const userDataString = localStorage.getItem('userData');
-    if (!userDataString) {
-      console.warn('No se encontraron datos de usuario en el localStorage.');
-    } else {
-      try {
-        const userData = JSON.parse(userDataString);
-        userEmail = userData.email;
-      } catch (error) {
-        console.error('Error al parsear los datos del usuario:', error);
-      }
-    }
+  // 📦 Crear la orden
+  addOrderData(order_obj: any): void {
+    const userEmail = this.getUserEmail();
+    if (!userEmail) return;
 
-    if (!order_obj.time_delivery) {
-      console.error('⚠️ Error: timeDelivery está vacío o indefinido.');
-      return;
-    }
-
-    // Combina application_date y time_delivery para crear un objeto Date completo
     const [hours, minutes] = order_obj.time_delivery.split(':').map(Number);
-    const selectedDateTime = new Date(order_obj.application_date);
-    const selectedDate = new Date(order_obj.application_date);
-    selectedDateTime.setHours(hours, minutes, 0);
+    const applicationDate = this.parseApplicationDate(
+      order_obj.application_date
+    );
+    const fullDate = new Date(applicationDate!);
+    fullDate.setHours(hours, minutes, 0);
 
-    if (isNaN(selectedDateTime.getTime())) {
-      console.error('⚠️ Error: No se pudo crear la fecha completa.');
-      return;
-    }
-    if (isNaN(selectedDate.getTime())) {
-      console.error('⚠️ Error: No se pudo crear la fecha completa.');
+    if (isNaN(fullDate.getTime())) {
+      console.error('⚠️ Fecha inválida');
       return;
     }
 
-    // Formatear application_date si es necesario
-    const applicationDateTimeFormatted = dayjs(selectedDateTime).format(
+    const applicationDateTimeFormatted = dayjs(fullDate).format(
       'YYYY-MM-DDTHH:mm:ss'
     );
     const applicationDateFormatted =
-      dayjs(selectedDateTime).format('YYYY-MM-DD');
+      dayjs(applicationDate).format('YYYY-MM-DD');
 
-    const normalizeAndConvertToNumber = (value: string | number): number => {
-      if (typeof value === 'number') {
-        return value; // Si ya es un número, devuélvelo tal cual
-      }
-      // Reemplazar comas por puntos y convertir a número
-      const normalizedValue = value.replace(',', '.');
-      const numericValue = parseFloat(normalizedValue);
-      return isNaN(numericValue) ? 0.0 : numericValue; // Si no es un número, devuelve 0.0
-    };
+    const m3AsNumber = this.normalizeAndConvertToNumber(order_obj.m3);
 
-    // Normalizar y convertir m3 a string
-    const m3AsString = normalizeAndConvertToNumber(order_obj.m3);
-
-    const orderPayload: Order = {
+    const orderPayload: any = {
       idorders: 0,
       codOrder: '',
-      client: order_obj.client?.trim() || '',
+      client: order_obj.customer?.trim() || '',
       clientEmail: userEmail,
       applicant: order_obj.applicant?.trim() || '',
-      product: order_obj.product?.trim() || '',
+      product: order_obj.nameProduct?.trim() || '',
       thunder: order_obj.thunder?.trim() || '',
-      cod_product: order_obj.cod_product?.trim() || '',
+      cod_product: order_obj.codProduct?.trim() || '',
       application_date: applicationDateFormatted,
-      coordinator_concrete: order_obj.coordinator_concrete?.trim() || '',
-      frequency_radial: order_obj.frequency_radial?.trim() || '',
-      point_delivery: order_obj.point_delivery?.trim() || '',
-      final_destination: order_obj.final_destination?.trim() || '',
+      coordinator_concrete: order_obj.concreteCoordinator?.trim() || '',
+      frequency_radial: order_obj.radialFrequency?.trim() || '',
+      point_delivery: order_obj.deliveryPoint?.trim() || '',
+      final_destination: order_obj.finalDestination?.trim() || '',
       observation: order_obj.observation?.trim() || '',
       time_delivery: applicationDateTimeFormatted,
-      m3: m3AsString,
+      m3: m3AsNumber,
       dispatch_frequency: order_obj.dispatch_frequency,
-      status: {
-        id: 1,
-        name: 'Programado',
-      },
+      status: { id: 1, name: 'Programado' },
       statusRequests: [],
     };
-    console.log('Orden', orderPayload);
+
     this.orderService.create(orderPayload).subscribe({
-      next: (response) => {
+      next: () => {
         Swal.fire({
           title: 'Creada nueva Solicitud!',
           text: 'Creada con éxito!',
@@ -307,123 +243,142 @@ export class RequestDispatchComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al crear la solicitud:', err);
-        if (err.status === 400) {
-          Swal.fire({
-            title: 'Error!',
-            text: err.error.message,
-            icon: 'error',
-          });
-        } else {
-          Swal.fire({
-            title: 'Error inesperado!',
-            text: 'Intenta nuevamente más tarde.',
-            icon: 'error',
-          });
-        }
+        const text =
+          err.status === 400
+            ? err.error.message
+            : 'Intenta nuevamente más tarde.';
+        Swal.fire({ title: 'Error!', text, icon: 'error' });
       },
     });
   }
 
+  // 📤 Obtener email de localStorage
+  getUserEmail(): string | null {
+    const userDataString = localStorage.getItem('userData');
+    if (!userDataString) {
+      this.showError('No se encontraron datos de usuario en el localStorage.');
+      return null;
+    }
+    try {
+      const userData = JSON.parse(userDataString);
+      return userData.email;
+    } catch (error) {
+      console.error('Error al parsear los datos del usuario:', error);
+      return null;
+    }
+  }
+
+  // 🔢 Normalizar m3
+  normalizeAndConvertToNumber(value: string | number): number {
+    if (typeof value === 'number') return value;
+    const normalizedValue = value.replace(',', '.');
+    const numericValue = parseFloat(normalizedValue);
+    return isNaN(numericValue) ? 0.0 : numericValue;
+  }
+
+  // ✅ Validaciones modulares
   validateFormData(data: any): boolean {
-    let isValid = true;
-    console.log('Data', data);
+    if (!this.validateDateAndTime(data)) return false;
+    if (!this.validateDispatchFrequency(data.dispatch_frequency)) return false;
+    return true;
+  }
 
-    if (data.application_date && data.time_delivery) {
-      let selectedDate: Date;
+  validateDateAndTime(data: any): boolean {
+    const date = this.parseApplicationDate(data.application_date);
+    const time24 = this.convertTo24HourFormat(data.time_delivery);
+    if (!date || !time24) return false;
 
-      // Procesar la fecha de aplicación
-      if (typeof data.application_date === 'string') {
-        const [day, month, year] = data.application_date.split('/');
-        selectedDate = new Date(`${year}-${month}-${day}`);
-      } else if (data.application_date instanceof Date) {
-        selectedDate = data.application_date;
-      } else {
+    const [hours, minutes] = time24.split(':').map(Number);
+    data.time_delivery = time24;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+
+    if (date < today) {
+      this.showError(
+        'No se pueden hacer solicitudes con fechas anteriores al día actual.'
+      );
+      return false;
+    }
+
+    if (this.isSameDay(date, today)) {
+      const selectedTime = new Date(date);
+      selectedTime.setHours(hours, minutes, 0, 0);
+      const minAllowed = new Date(Date.now() + 3 * 60 * 60 * 1000);
+      if (selectedTime < minAllowed) {
+        const minTime = minAllowed.toLocaleTimeString('es-CL', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        });
+        const horaElegida = `${hours.toString().padStart(2, '0')}:${minutes
+          .toString()
+          .padStart(2, '0')}`;
+        this.showError(
+          `La hora ${horaElegida} ya no está disponible para hoy. ` +
+            `Por favor, selecciona el día siguiente si quieres agendar a esa hora. ` +
+            `Las horas disponibles para hoy son desde las ${minTime} hasta las 23:59 PM.`
+        );
         return false;
       }
-
-      // Convertir time_delivery de 12 horas a 24 horas correctamente
-      const timeString = data.time_delivery.trim();
-      let hours: number;
-      let minutes: number;
-
-      if (timeString.includes('AM') || timeString.includes('PM')) {
-        const timeParts = timeString.match(/(\d+):(\d+)\s*(AM|PM)/i);
-        if (!timeParts) {
-          return false;
-        }
-        hours = parseInt(timeParts[1], 10);
-        minutes = parseInt(timeParts[2], 10);
-        const period = timeParts[3].toUpperCase();
-
-        if (period === 'PM' && hours !== 12) {
-          hours += 12;
-        } else if (period === 'AM' && hours === 12) {
-          hours = 0;
-        }
-      } else {
-        // Si ya está en formato 24 horas, solo separar
-        [hours, minutes] = timeString.split(':').map(Number);
-      }
-
-      data.time_delivery = `${hours.toString().padStart(2, '0')}:${minutes
-        .toString()
-        .padStart(2, '0')}`;
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      selectedDate.setHours(0, 0, 0, 0);
-
-      if (selectedDate < today) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'No se pueden hacer solicitudes con fechas anteriores al día actual.',
-          icon: 'error',
-        });
-        isValid = false;
-      } else if (
-        selectedDate.getDate() === today.getDate() &&
-        selectedDate.getMonth() === today.getMonth() &&
-        selectedDate.getFullYear() === today.getFullYear()
-      ) {
-        // Convertir data.time_delivery (HH:mm) a objeto Date
-        const [hours24, minutes24] = data.time_delivery.split(':').map(Number);
-        const selectedTime = new Date(selectedDate);
-        selectedTime.setHours(hours24, minutes24, 0, 0);
-
-        // Calcular 3 horas después de la hora actual
-        const now = new Date();
-        if (hours24 < now.getHours()) {
-          selectedTime.setDate(selectedTime.getDate() + 1);
-        }
-        const threeHoursLater = new Date(now.getTime() + 3 * 60 * 60 * 1000);
-
-        // Validar si la hora seleccionada es menor a 3 horas después
-        if (selectedTime < threeHoursLater) {
-          const formattedMinTime = threeHoursLater.toLocaleTimeString('es-CL', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          });
-          Swal.fire({
-            title: 'Error!',
-            text: `Horas disponibles para despachos a partir de las: ${formattedMinTime}`,
-            icon: 'error',
-          });
-          isValid = false;
-        }
-      }
-
-      // Convertir dispatch_frequency a número
-      const dispatchFrequency = parseInt(data.dispatch_frequency, 10);
-      if (isNaN(dispatchFrequency) || dispatchFrequency < 15) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'La frecuencia de despachos debe ser como mínimo de 15 minutos.',
-          icon: 'error',
-        });
-        isValid = false;
-      }
     }
-    return isValid;
+
+    return true;
+  }
+
+  validateDispatchFrequency(value: any): boolean {
+    const freq = parseInt(value, 10);
+    if (isNaN(freq) || freq < 15) {
+      this.showError(
+        'La frecuencia de despachos debe ser como mínimo de 15 minutos.'
+      );
+      return false;
+    }
+    return true;
+  }
+
+  // 🧰 Utilidades auxiliares
+  parseApplicationDate(date: any): Date | null {
+    if (typeof date === 'string') {
+      const [day, month, year] = date.split('/');
+      return new Date(`${year}-${month}-${day}`);
+    } else if (date instanceof Date) {
+      return date;
+    }
+    return null;
+  }
+
+  convertTo24HourFormat(time: string): string | null {
+    const match = time.trim().match(/(\d+):(\d+)\s*(AM|PM)?/i);
+    if (!match) {
+      console.warn('⚠️ Hora inválida:', time);
+      return null;
+    }
+
+    let [_, hour, minute, period] = match;
+    let hours = parseInt(hour, 10);
+    let minutes = parseInt(minute, 10);
+
+    if (period) {
+      if (period.toUpperCase() === 'PM' && hours !== 12) hours += 12;
+      if (period.toUpperCase() === 'AM' && hours === 12) hours = 0;
+    }
+
+    return `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}`;
+  }
+
+  isSameDay(d1: Date, d2: Date): boolean {
+    return (
+      d1.getDate() === d2.getDate() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getFullYear() === d2.getFullYear()
+    );
+  }
+
+  showError(message: string): void {
+    Swal.fire({ title: 'Error!', text: message, icon: 'error' });
   }
 }
