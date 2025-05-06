@@ -1,0 +1,39 @@
+/* En dispatch.component.scss */
+:host {
+  display: block;
+  margin-bottom: 1rem; /* Reducir el margen inferior */
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important; /* Reducir el espacio debajo de los datepickers */
+}
+
+.d-flex {
+  gap: 0.5rem; /* Reducir el espacio entre elementos */
+}
+
+mat-form-field {
+  font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0.5em; /* Reducir el padding */
+  }
+
+  .mat-form-field-infix {
+    padding: 0.5em 0; /* Reducir el padding interno */
+  }
+}
+
+ngx-charts-bar-vertical {
+  /* Reducir el tamaño del gráfico */
+  width: 100% !important;
+  height: 300px !important; /* Altura más pequeña */
+
+  .bar {
+    stroke-width: 1px; /* Líneas más delgadas */
+  }
+
+  text {
+    font-size: 10px !important; /* Texto más pequeño en ejes */
+  }
+}

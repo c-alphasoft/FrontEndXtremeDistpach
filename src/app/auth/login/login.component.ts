@@ -83,6 +83,8 @@ export class LoginComponent implements OnInit {
         const login = {
           user: payload.username,
           email: payload.email,
+          name: payload.name,
+          lastname: payload.lastname,
           isAuth: true,
           isAdmin: payload.isAdmin,
         };

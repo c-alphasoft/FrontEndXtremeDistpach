@@ -1,28 +1,29 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { CustomerService } from '../../../../services/customer.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { Customer } from '../../../../modules/interfaces/customer';
+import { OrderService } from '../../../../services/order.service';
+import { Product } from '../../../../modules/interfaces/product';
 import { MaterialModule } from '../../../../material.module';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { DateTime } from 'luxon';
+import Swal from 'sweetalert2';
+import dayjs from 'dayjs';
 import {
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { CommonModule, DatePipe } from '@angular/common';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MatNativeDateModule,
   provideNativeDateAdapter,
 } from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { Customer } from '../../../../modules/interfaces/customer';
-import { CustomerService } from '../../../../services/customer.service';
-import { Product } from '../../../../modules/interfaces/product';
-import Swal from 'sweetalert2';
-import { OrderService } from '../../../../services/order.service';
-import dayjs from 'dayjs';
-import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
-import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-request-dispatch',
@@ -44,13 +45,14 @@ import { DateTime } from 'luxon';
 })
 export class RequestDispatchComponent implements OnInit {
   @ViewChild('timepicker') timepicker: any;
-  eventForm: UntypedFormGroup;
+  eventForm: FormGroup;
   clientes: Customer[] = [];
   selectedCustomerProducts: Product[] = [];
   required: boolean = false;
   maxTime: DateTime = DateTime.local().set({ hour: 16 });
   minTime: DateTime = DateTime.local().set({ hour: 14 });
   showFrequencyField = false;
+  selectedCustomer: Customer | null = null;
 
   constructor(
     private customerService: CustomerService,
@@ -61,6 +63,7 @@ export class RequestDispatchComponent implements OnInit {
   ) {
     const today = new Date();
     this.eventForm = this.fb.group({
+      id: ['', Validators.required],
       customer: ['', Validators.required],
       applicant: ['', Validators.required],
       concreteCoordinator: ['', Validators.required],
@@ -119,23 +122,24 @@ export class RequestDispatchComponent implements OnInit {
 
   updateClientInfo(customerName: string) {
     // Busca el cliente seleccionado en el array clientes
-    const selectedCustomer = this.clientes.find(
-      (cliente) => cliente.customer === customerName
-    );
+    this.selectedCustomer =
+      this.clientes.find((cliente) => cliente.customer === customerName) ||
+      null;
 
-    if (selectedCustomer) {
+    if (this.selectedCustomer) {
       // Actualiza los valores del formulario con los datos del cliente
       this.eventForm.patchValue({
-        customer: selectedCustomer.customer,
-        applicant: selectedCustomer.applicant,
-        concreteCoordinator: selectedCustomer.concreteCoordinator,
-        radialFrequency: selectedCustomer.radialFrequency,
-        deliveryPoint: selectedCustomer.deliveryPoint,
-        finalDestination: selectedCustomer.finalDestination,
+        id: this.selectedCustomer.id,
+        customer: this.selectedCustomer.customer,
+        applicant: this.selectedCustomer.applicant,
+        concreteCoordinator: this.selectedCustomer.concreteCoordinator,
+        radialFrequency: this.selectedCustomer.radialFrequency,
+        deliveryPoint: this.selectedCustomer.deliveryPoint,
+        finalDestination: this.selectedCustomer.finalDestination,
       });
 
       // Actualiza los productos del cliente seleccionado
-      this.selectedCustomerProducts = selectedCustomer.products || [];
+      this.selectedCustomerProducts = this.selectedCustomer.products || [];
     } else {
       this.selectedCustomerProducts = [];
     }
@@ -212,6 +216,7 @@ export class RequestDispatchComponent implements OnInit {
       idorders: 0,
       codOrder: '',
       client: order_obj.customer?.trim() || '',
+      customer_id: this.selectedCustomer?.id || 0,
       clientEmail: userEmail,
       applicant: order_obj.applicant?.trim() || '',
       product: order_obj.nameProduct?.trim() || '',

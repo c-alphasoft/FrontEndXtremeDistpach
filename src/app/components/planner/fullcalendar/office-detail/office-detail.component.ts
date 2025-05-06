@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
-import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-office-detail',

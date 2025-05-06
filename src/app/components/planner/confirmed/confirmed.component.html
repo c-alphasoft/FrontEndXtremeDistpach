@@ -1,1 +1,140 @@
-<p>confirmed works!</p>
+<mat-card class="cardWithShadow">
+    <mat-card-content class="p-24">
+        <form name="eventForm" class="event-form">
+            <mat-card class="cardWithShadow">
+                <mat-card-content>
+                    <div class="d-flex align-items-center">
+                        <mat-card-title class="m-b-0"> {{detalle}} </mat-card-title>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let order of events" class="cardWithShadow">
+                    <mat-expansion-panel-header>
+                        <div class="panel-header-container">
+                            <div class="panel-data-group">
+                                <div class="data-item order-number">
+                                    ORDEN: {{ order.codOrder }}
+                                </div>
+                                <div class="data-item data-label">
+                                    Despacho: {{ order.statusRequests[0].dispatchCode || 'N/A' }}
+                                </div>
+                                <div class="data-item data-label">
+                                    Cliente: {{ order.client }}
+                                </div>
+                                <div class="data-item data-label-m3">
+                                    M3: {{ order.statusRequests[0].m3 || 'N/A' }}
+                                </div>
+                                <div class="data-item data-label">
+                                    Carga: {{ (order.statusRequests[0].dispatchTime | date: 'HH:mm') || 'N/A' }}
+                                </div>
+                                <div class="data-item data-label">
+                                    Entrega: {{ (order.statusRequests[0].timeDelivery | date: 'HH:mm') || 'N/A' }}
+                                </div>
+                                <div class="data-item status-value">
+                                    Estatus: {{ order.statusRequests[0].status.name || 'N/A' }}
+                                </div>
+                            </div>
+                            <button mat-icon-button (click)="openProcesarModal(order); $event.stopPropagation()"
+                                class="action-button" matTooltip="Procesar" aria-label="Procesar">
+                                <mat-icon>arrow_forward</mat-icon>
+                            </button>
+                        </div>
+                    </mat-expansion-panel-header>
+                    <div class="row m-y-10 p-t-10">
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Solicitante</mat-label>
+                                <input matInput [value]="order.applicant" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Coordinador de Hormigón</mat-label>
+                                <input matInput [value]="order.coordinator_concrete" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Frecuencia Radial</mat-label>
+                                <input matInput [value]="order.frequency_radial" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Destino Final</mat-label>
+                                <input matInput [value]="order.final_destination" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Punto de Entrega</mat-label>
+                                <input matInput [value]="order.point_delivery" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Código Producto</mat-label>
+                                <input matInput [value]="order.cod_product" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Producto</mat-label>
+                                <input matInput [value]="order.product" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Frecuencia Despacho</mat-label>
+                                <input matInput [value]="order.dispatch_frequency" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Observación</mat-label>
+                                <input matInput [value]="order.observation" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Usuario</mat-label>
+                                <input matInput
+                                    [value]="order.statusRequests[0].additionalInformation?.aprobado?.user || 'N/A'"
+                                    readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Confirmante</mat-label>
+                                <input matInput
+                                    [value]="order.statusRequests[0].additionalInformation?.aprobado?.confirmer || 'N/A'"
+                                    readonly>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Observación</mat-label>
+                                <input matInput
+                                    [value]="order.statusRequests[0].additionalInformation?.aprobado?.observation || 'N/A'"
+                                    readonly>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Hora de Confirmación</mat-label>
+                                <input matInput
+                                    [value]="order.statusRequests[0].additionalInformation?.aprobado?.confirmation_time ? (order.statusRequests[0].additionalInformation?.aprobado?.confirmation_time | date:'shortTime') : 'N/A'"
+                                    readonly>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+    </mat-card-content>
+</mat-card>

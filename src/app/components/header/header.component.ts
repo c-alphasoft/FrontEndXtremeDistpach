@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   @Output() toggleCollapsed = new EventEmitter<void>();
 
   showFiller = false;
+  profiledd!: profiledd;
 
   constructor(
     public dialog: MatDialog,
@@ -36,17 +37,33 @@ export class HeaderComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userLoad();
+  }
 
-  profiledd: profiledd[] = [
-    {
-      id: 1,
-      img: '/assets/images/svgs/icon-account.svg',
-      title: 'Mi Perfil',
-      subtitle: 'Configuración de Cuenta',
-      link: '/authentication/login',
-    },
-  ];
+  userLoad() {
+    const userDataStr = localStorage.getItem('userData');
+    if (userDataStr) {
+      try {
+        const userData = JSON.parse(userDataStr);
+        this.profiledd = {
+          id: 1,
+          img: '/assets/images/svgs/icon-account.svg',
+          title: 'Mi Perfil',
+          subtitle: 'Configuración de Cuenta',
+          link: '/authentication/login',
+          name: userData.name,
+          lastname: userData.lastname,
+          email: userData.email,
+          rol: userData.user,
+        };
+      } catch (error) {
+        console.error('Error al parsear userData:', error);
+      }
+    } else {
+      console.warn('No se encontró userData en localStorage');
+    }
+  }
 
   onLogout() {
     this.spinner.show();

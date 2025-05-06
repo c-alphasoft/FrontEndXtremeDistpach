@@ -1,0 +1,178 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content class="p-24">
+        <form name="eventForm" *ngIf="eventForm" [formGroup]="eventForm" class="event-form" (ngSubmit)="onSubmit()">
+            <mat-card class="cardWithShadow">
+                <mat-card-content>
+                    <div class="d-flex align-items-center">
+                        <mat-card-title class="m-b-0">Editar Despacho</mat-card-title>
+                        <div class="ml-auto d-flex gap-10">
+                            <button color="warn" mat-stroked-button type="button" (click)="onCancel()">
+                                Cancelar
+                            </button>
+                            <button mat-raised-button type="button" color="warn" (click)="onDelete()">
+                                Eliminar
+                            </button>
+                            <button mat-raised-button color="primary" type="submit">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <div class="row p-t-20">
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>ID Despacho</mat-label>
+                        <input matInput formControlName="dispatchCode" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Hora Despacho</mat-label>
+                        <input matInput formControlName="dispatchTime" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Hora Entrega</mat-label>
+                        <input matInput formControlName="dispatchTimeDelivery" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>M3</mat-label>
+                        <input matInput formControlName="dispatchM3" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Turno</mat-label>
+                        <input matInput formControlName="dispatchShift" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Estado</mat-label>
+                        <input matInput formControlName="dispatchStatus" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Observación</mat-label>
+                        <input matInput formControlName="dispatchObservation" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-accordion>
+                <mat-expansion-panel class="cardWithShadow" (opened)="panelOpenState = true"
+                    (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="f-w-600 mat-body-1">
+                            Orden: {{receivedData.codOrder}}
+                        </mat-panel-title>
+                        <mat-panel-description class="mat-body-1">
+                            Cliente: {{receivedData.client}}
+                        </mat-panel-description>
+                        <mat-panel-description class="mat-body-2">
+                            Detalle de Orden
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row p-t-20">
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Orden</mat-label>
+                                <input matInput name="codOrder" formControlName="codOrder" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Cliente</mat-label>
+                                <input matInput name="client" formControlName="client" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Email</mat-label>
+                                <input matInput name="email" formControlName="clientEmail" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Solicitante</mat-label>
+                                <input matInput formControlName="applicant" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Coordinador de Hormigón</mat-label>
+                                <input matInput formControlName="coordinator_concrete" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Frecuencia Radial</mat-label>
+                                <input matInput formControlName="frequency_radial" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Destino Final</mat-label>
+                                <input matInput formControlName="final_destination" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Punto de Entrega</mat-label>
+                                <input matInput formControlName="point_delivery" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Código Producto</mat-label>
+                                <input matInput formControlName="cod_product" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Producto</mat-label>
+                                <input matInput formControlName="product" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Fecha de Entrega</mat-label>
+                                <input matInput formControlName="date_delivery_order" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Hora de Entrega</mat-label>
+                                <input matInput formControlName="time_delivery_order" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>M3</mat-label>
+                                <input matInput formControlName="m3Order" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Frecuencia Despacho</mat-label>
+                                <input matInput formControlName="dispatch_frequency" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6 ">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Observación</mat-label>
+                                <input matInput formControlName="observationOrder" readonly>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+    </mat-card-content>
+</mat-card>

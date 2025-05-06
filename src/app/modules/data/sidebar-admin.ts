@@ -10,25 +10,8 @@ export const navItemsAdmin: NavItemAdmin[] = [
     route: '/admin/dashboard',
     roles: ['admin', 'planner', 'dispatcher'],
   },
-  // {
-  //   displayName: 'Despachos',
-  //   iconName: 'file-invoice',
-  //   route: 'dispatch',
-  //   children: [
-  //     {
-  //       displayName: 'Control',
-  //       iconName: 'point',
-  //       route: '/admin/dispatch/dispatch-list',
-  //     },
-  //     {
-  //       displayName: 'Flujo',
-  //       iconName: 'point',
-  //       route: '/admin/dispatch/states',
-  //     },
-  //   ],
-  // },
   {
-    displayName: 'Planificador',
+    displayName: 'Control Despachos',
     iconName: 'calendar-event',
     route: 'planner',
     children: [
@@ -39,26 +22,78 @@ export const navItemsAdmin: NavItemAdmin[] = [
         roles: ['admin', 'planner', 'dispatcher', 'user'],
       },
       {
-        displayName: 'Solicitudes',
+        displayName: 'Programados',
+        iconName: 'point',
+        route: '/admin/planner/confirmed',
+      },
+      {
+        displayName: 'Procesados',
+        iconName: 'point',
+        route: '/admin/planner/processed',
+      },
+      {
+        displayName: 'Despachados',
+        iconName: 'point',
+        route: 'offices',
+        roles: ['admin', 'planner', 'dispatcher'],
+        children: [
+          {
+            displayName: 'Guías Softland',
+            iconName: 'point',
+            route: '/admin/planner/offices/softland',
+            roles: ['admin', 'planner', 'dispatcher'],
+          },
+          {
+            displayName: 'Guías Provisorias',
+            iconName: 'point',
+            route: '/admin/planner/offices/provisional',
+            roles: ['admin', 'planner', 'dispatcher'],
+          },
+        ],
+      },
+      {
+        displayName: 'Finalizados',
         iconName: 'point',
         route: '/admin/planner/request-list',
-        roles: ['admin', 'planner', 'dispatcher', 'user'],
+        roles: ['admin', 'planner', 'dispatcher'],
       },
-      // {
-      //   displayName: 'Confirmado',
-      //   iconName: 'point',
-      //   route: '/admin/planner/confirmed',
-      // },
-      // {
-      //   displayName: 'Planificado',
-      //   iconName: 'point',
-      //   route: '/admin/planner/plan',
-      // },
-      // {
-      //   displayName: 'Despacho',
-      //   iconName: 'point',
-      //   route: '/admin/planner/dispatch',
-      // },
+    ],
+  },
+  {
+    displayName: 'Configuración',
+    iconName: 'Settings',
+    route: 'settings',
+    children: [
+      {
+        displayName: 'Usuarios',
+        iconName: 'point',
+        route: '/admin/settings/users',
+      },
+      {
+        displayName: 'Contratos',
+        iconName: 'point',
+        route: '/admin/settings/contracts',
+      },
+      {
+        displayName: 'Clientes',
+        iconName: 'point',
+        route: '/admin/settings/customers',
+      },
+      {
+        displayName: 'Equipos',
+        iconName: 'point',
+        route: '/admin/settings/teams',
+      },
+      {
+        displayName: 'Planteros',
+        iconName: 'point',
+        route: '/admin/settings/planters',
+      },
+      {
+        displayName: 'Plantas',
+        iconName: 'point',
+        route: '/admin/settings/floors',
+      },
     ],
   },
   // {

@@ -14,7 +14,7 @@ export class Order {
   observation!: string;
   point_delivery!: string;
   product!: string;
-  thunder!: string;
+  thunder!: string | null;
   time_delivery!: string;
   status!: {
     id: number;
@@ -27,9 +27,27 @@ export class Order {
     dispatchCode: string;
     timeDelivery: string;
     dispatchTime: string;
+    modifiedBy?: number;
     status: {
       id: number;
       name: string;
+    };
+    additionalInformation?: {
+      aprobado: {
+        user?: string;
+        confirmer?: string;
+        observation?: string;
+        confirmation_time?: string | Date;
+        approveTime?: string | Date; // <-- faltaba esto
+      };
+      procesado?: {
+        seal?: string;
+        patent?: string;
+        conduits?: string;
+        conductorRut?: string;
+        processedTime?: string | Date;
+        usuarioProcess?: string;
+      };
     };
   }>;
 }

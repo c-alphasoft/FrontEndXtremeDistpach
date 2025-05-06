@@ -15,6 +15,7 @@ import { NavItemComponent } from '../nav-item/nav-item.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { NavItemAdmin } from '../../modules/interfaces/nav-item-admin';
 import { navItemsUser } from '../../modules/data/sidebar-user';
+import { navItemsPlanner } from '../../modules/data/sidebar-planner';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -70,6 +71,8 @@ export class LayoutsComponent implements OnInit {
         this.navItems = this.filterMenuByRole(navItemsAdmin, username);
       } else if (username === 'user') {
         this.navItems = this.filterMenuByRole(navItemsUser, username);
+      } else if (username === 'planner') {
+        this.navItems = this.filterMenuByRole(navItemsPlanner, username);
       } else {
         throw new Error('Rol no reconocido');
       }

@@ -25,22 +25,22 @@
 
     <!-- profile Dropdown -->
     <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
-        <ng-scrollbar class="position-relative" style="height: 647px">
+        <ng-scrollbar class="position-relative" style="height: 400px;">
             <div class="p-x-32 p-y-16">
                 <h6 class="f-s-16 f-w-600 m-0 mat-subtitle-1">Perfil de Usuario</h6>
                 <div class="d-flex align-items-center p-b-24 b-b-1 m-t-16">
-                    <img src="/assets/images/profile/xx.jpg" class="rounded-circle" width="95" />
+                    <img src="/assets/images/profile/xx.jpg" class="rounded-circle" width="50" />
                     <div class="m-l-16">
-                        <h6 class="f-s-14 f-w-600 m-0 mat-subtitle-1">Anderson Dominguez</h6>
-                        <span class="f-s-14 d-block m-b-4">Diseñador</span>
+                        <h6 class="f-s-14 f-w-600 m-0 mat-subtitle-1">{{profiledd.name}} {{profiledd.lastname}} </h6>
+                        <span class="f-s-14 d-block m-b-4">{{profiledd.rol}}</span>
                         <span class="d-flex align-items-center">
                             <i-tabler name="mail" class="icon-15 m-r-4"></i-tabler>
-                            info&#64;Xtremedistpach.com
+                            {{profiledd.email}}
                         </span>
                     </div>
                 </div>
             </div>
-            <div class="p-x-32">
+            <!-- <div class="p-x-32">
                 @for(profile of profiledd; track profile.title) {
                 <a class="p-y-16 text-decoration-none d-block text-hover-primary" [routerLink]="[profile.link]">
                     <div class="d-flex align-items-center">
@@ -57,7 +57,7 @@
                     </div>
                 </a>
                 }
-            </div>
+            </div> -->
 
             <div class="p-y-12 p-x-32">
                 <a (click)="onLogout()" mat-stroked-button color="primary" class="w-100">

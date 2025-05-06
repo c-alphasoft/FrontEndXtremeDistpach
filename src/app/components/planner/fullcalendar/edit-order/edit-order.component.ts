@@ -1,30 +1,25 @@
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { CustomerService } from '../../../../services/customer.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Customer } from '../../../../modules/interfaces/customer';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { OrderService } from '../../../../services/order.service';
-import { Order } from '../../../../modules/interfaces/order';
+import { Product } from '../../../../modules/interfaces/product';
+import { MaterialModule } from '../../../../material.module';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { DateTime } from 'luxon';
+import Swal from 'sweetalert2';
+import dayjs from 'dayjs';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  UntypedFormControl,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { MaterialModule } from '../../../../material.module';
-import { CommonModule } from '@angular/common';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
-import { Customer } from '../../../../modules/interfaces/customer';
-import { CustomerService } from '../../../../services/customer.service';
-import { Product } from '../../../../modules/interfaces/product';
-import { ProductService } from '../../../../services/product.service';
-import { DateTime } from 'luxon';
-import { Turno } from '../../../../modules/interfaces/thunder';
-import dayjs from 'dayjs';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-order',
@@ -78,8 +73,6 @@ export class EditOrderComponent implements OnInit {
   }
 
   private initializeForm(data: any): void {
-    console.log('datos', data);
-    const order = this.receivedData?.date?.meta?.order;
     this.eventForm = this.fb.group({
       customer: [data.client || '', Validators.required],
       codProduct: [data.cod_product, Validators.required],

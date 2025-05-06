@@ -20,6 +20,8 @@ const routes: Routes = [
       import('./planner/planner.component').then(
         (comp) => comp.PlannerComponent
       ),
+    loadChildren: () =>
+      import('./planner/planner.routes').then((router) => router.PlannerRoutes),
   },
   {
     path: 'user',

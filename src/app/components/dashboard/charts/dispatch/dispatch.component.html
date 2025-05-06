@@ -1,0 +1,44 @@
+<div class="chart-wrapper">
+    <div class="filter-controls">
+        <div class="filter-row">
+            <div class="date-filters">
+                <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Desde</mat-label>
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="startDate" />
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Hasta</mat-label>
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate" />
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" (click)="filterByDates()" class="filter-btn">
+                    <mat-icon>search</mat-icon>
+                    Consultar
+                </button>
+            </div>
+        </div>
+
+        <div class="client-filter">
+            <mat-chip-listbox aria-label="Clientes" multiple>
+                <mat-chip-option *ngFor="let client of getUniqueClients()" [selected]="isClientSelected(client)"
+                    (click)="toggleClientSelection(client)">
+                    {{client}}
+                </mat-chip-option>
+            </mat-chip-listbox>
+        </div>
+    </div>
+
+    <!-- Gráfico mejorado -->
+    <div class="chart-container">
+        <ngx-charts-bar-vertical [results]="filteredData" [xAxis]="true" [yAxis]="true" [legend]="false"
+            [showDataLabel]="true" [scheme]="colorScheme" [gradient]="false" [roundEdges]="false" [barPadding]="12"
+            [showXAxisLabel]="false" [showYAxisLabel]="false" [xAxisTickFormatting]="formatXTicks"
+            [yAxisTickFormatting]="formatYTicks" [animations]="true">
+        </ngx-charts-bar-vertical>
+    </div>
+</div>

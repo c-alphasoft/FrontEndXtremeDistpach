@@ -67,6 +67,13 @@ export const AdminRoutes: Routes = [
           ),
       },
       {
+        path: 'processed',
+        loadComponent: () =>
+          import('../../components/planner/processed/processed.component').then(
+            (comp) => comp.ProcessedComponent
+          ),
+      },
+      {
         path: 'dispatch',
         loadComponent: () =>
           import('../../components/planner/dispatch/dispatch.component').then(
@@ -101,19 +108,31 @@ export const AdminRoutes: Routes = [
             '../../components/planner/fullcalendar/edit-order/edit-order.component'
           ).then((comp) => comp.EditOrderComponent),
       },
-    ],
-  },
-  {
-    path: 'reportability',
-    canActivate: [hasRoleGuard],
-    data: { roles: ['admin'] },
-    children: [
       {
-        path: 'reportability-list',
+        path: 'edit-dispatch',
         loadComponent: () =>
           import(
-            '../../components/reportability/reportability-list/reportability-list.component'
-          ).then((comp) => comp.ReportabilityListComponent),
+            '../../components/planner/fullcalendar/edit-dispatch/edit-dispatch.component'
+          ).then((comp) => comp.EditDispatchComponent),
+      },
+      {
+        path: 'offices',
+        children: [
+          {
+            path: 'softland',
+            loadComponent: () =>
+              import(
+                '../../components/planner/offices/softland/softland.component'
+              ).then((comp) => comp.SoftlandComponent),
+          },
+          {
+            path: 'provisional',
+            loadComponent: () =>
+              import(
+                '../../components/planner/offices/provisional/provisional.component'
+              ).then((comp) => comp.ProvisionalComponent),
+          },
+        ],
       },
     ],
   },
@@ -128,6 +147,55 @@ export const AdminRoutes: Routes = [
           import('../../components/settings/users/users.component').then(
             (comp) => comp.UsersComponent
           ),
+      },
+      {
+        path: 'contracts',
+        loadComponent: () =>
+          import('../../components/settings/contract/contract.component').then(
+            (comp) => comp.ContractComponent
+          ),
+      },
+      {
+        path: 'customers',
+        loadComponent: () =>
+          import(
+            '../../components/settings/customers/customers.component'
+          ).then((comp) => comp.CustomersComponent),
+      },
+      {
+        path: 'floors',
+        loadComponent: () =>
+          import('../../components/settings/floors/floors.component').then(
+            (comp) => comp.FloorsComponent
+          ),
+      },
+      {
+        path: 'planters',
+        loadComponent: () =>
+          import('../../components/settings/planters/planters.component').then(
+            (comp) => comp.PlantersComponent
+          ),
+      },
+      {
+        path: 'teams',
+        loadComponent: () =>
+          import('../../components/settings/teams/teams.component').then(
+            (comp) => comp.TeamsComponent
+          ),
+      },
+    ],
+  },
+  {
+    path: 'reportability',
+    canActivate: [hasRoleGuard],
+    data: { roles: ['admin'] },
+    children: [
+      {
+        path: 'reportability-list',
+        loadComponent: () =>
+          import(
+            '../../components/reportability/reportability-list/reportability-list.component'
+          ).then((comp) => comp.ReportabilityListComponent),
       },
     ],
   },

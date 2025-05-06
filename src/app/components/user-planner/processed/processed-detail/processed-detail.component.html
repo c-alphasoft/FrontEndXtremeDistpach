@@ -1,0 +1,49 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content class="p-24">
+        <form name="eventForm" class="event-form" *ngIf="orderForm" [formGroup]="orderForm" (ngSubmit)="saveDispatch()">
+            <mat-card class="cardWithShadow">
+                <mat-card-content>
+                    <div class="d-flex align-items-center">
+                        <mat-card-title class="m-b-0"> {{detalle}} </mat-card-title>
+                        <div class="ml-auto d-flex gap-10">
+                            <a (click)="onNoClick()" mat-stroked-button color="warn" class="m-r-10">
+                                Cancelar
+                            </a>
+                            <button mat-raised-button color="primary" type="submit">
+                                Procesar
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <div class="row p-t-20">
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Sello</mat-label>
+                        <input matInput formControlName="seal" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Patente</mat-label>
+                        <input matInput formControlName="patent" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre Conductor</mat-label>
+                        <input matInput formControlName="conduits" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Rut conductor</mat-label>
+                        <input matInput formControlName="conductorRut" required>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -55,6 +55,12 @@ export class OrderService {
     });
   }
 
+  findProcessedAll() {
+    return this.http.get<Order[]>(`${this.url}/processed`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   getScheduledOrders(email: string): Observable<Order[]> {
     return this.http.get<Order[]>(`${this.url}/scheduled/${email}`);
   }

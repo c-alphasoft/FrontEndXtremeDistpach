@@ -1,6 +1,6 @@
 <mat-card class="cardWithShadow">
     <mat-card-content class="p-24">
-        <form name="eventForm" class="event-form" [formGroup]="eventForm" (ngSubmit)="saveDispatch()">
+        <form name="eventForm" class="event-form" *ngIf="eventForm" [formGroup]="eventForm" (ngSubmit)="saveDispatch()">
             <mat-card class="cardWithShadow">
                 <mat-card-content>
                     <div class="d-flex align-items-center">
@@ -9,8 +9,11 @@
                             <a routerLink="/admin/planner/calendar" mat-stroked-button color="warn" class="m-r-10">
                                 Cancelar
                             </a>
+                            <button mat-raised-button color="accent" (click)="onEdit()">
+                                Editar
+                            </button>
                             <button mat-raised-button color="primary" type="submit">
-                                Programar
+                                Confirmar
                             </button>
                         </div>
                     </div>
@@ -22,43 +25,77 @@
                 <div class="col-sm-3 ">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>ID Despacho</mat-label>
-                        <input matInput formControlName="dispatch_code" readonly>
+                        <input matInput formControlName="dispatchCode" readonly>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-3 ">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Hora Despacho</mat-label>
-                        <input matInput formControlName="dispatchTime_dispatch" readonly>
+                        <input matInput formControlName="dispatchTime" readonly>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-3 ">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Hora Entrega</mat-label>
-                        <input matInput formControlName="time_delivery_dispatch" readonly>
+                        <input matInput formControlName="dispatchTimeDelivery" readonly>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-3 ">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>M3</mat-label>
-                        <input matInput formControlName="m3_dispatch" readonly>
+                        <input matInput formControlName="dispatchM3" readonly>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-3 ">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Turno</mat-label>
-                        <input matInput formControlName="shift_dispatch" readonly>
+                        <input matInput formControlName="dispatchShift" readonly>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-3 ">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Estado</mat-label>
-                        <input matInput formControlName="status_dispatch" readonly>
+                        <input matInput formControlName="dispatchStatus" readonly>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-6 ">
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Hora de confirmación</mat-label>
+                        <input matInput [ngxMatTimepicker]="timepicker" [format]="12" [required]="required" readonly
+                            formControlName="dispatchConfirmationTime" />
+                        <mat-icon matPrefix
+                            *ngIf="eventForm.get('dispatchConfirmationTime')?.value && !eventForm.get('dispatchConfirmationTime')?.disabled && !required"
+                            (click)="onClear($event)">
+                            close
+                        </mat-icon>
+                        <mat-icon matSuffix *ngIf="!eventForm.get('dispatchConfirmationTime')?.disabled"
+                            (click)="openFromIcon(timepicker)">
+                            schedule
+                        </mat-icon>
+                    </mat-form-field>
+                    <ngx-mat-timepicker #timepicker></ngx-mat-timepicker>
+                </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Vía Confirmación</mat-label>
+                        <mat-select formControlName="dispatchConfirmationRoute"
+                            (selectionChange)="updateRoadInfo($event.value)">
+                            @for (road of roads; track road) {
+                            <mat-option [value]="road.name">{{road.name}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3 ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Confirmante</mat-label>
+                        <input matInput formControlName="dispatchConfirmer" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-9 ">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Observación</mat-label>
-                        <input matInput formControlName="observation">
+                        <input matInput formControlName="dispatchObservation" required>
                     </mat-form-field>
                 </div>
             </div>
@@ -76,7 +113,7 @@
                             Detalle de Orden
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <div class="row m-y-24 p-t-24">
+                    <div class="row p-t-20">
                         <div class="col-sm-3 ">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Orden</mat-label>
@@ -161,7 +198,7 @@
                                 <input matInput formControlName="dispatch_frequency" readonly>
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-3 ">
+                        <div class="col-sm-6 ">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Observación</mat-label>
                                 <input matInput formControlName="observationOrder" readonly>

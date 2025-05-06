@@ -34,7 +34,21 @@ export class StatusRequestService {
       .pipe(
         catchError((error) => {
           if (error.status === 401) {
-            // Redirigir a la página de login si el token ha expirado o es inválido
+            this.router.navigate(['/login']);
+          }
+          return throwError(error);
+        })
+      );
+  }
+
+  updateStatusRequestProcessed(orderPayload: any): Observable<any> {
+    return this.http
+      .put<any>(`${this.url}/processed`, orderPayload, {
+        headers: this.getHeaders(),
+      })
+      .pipe(
+        catchError((error) => {
+          if (error.status === 401) {
             this.router.navigate(['/login']);
           }
           return throwError(error);

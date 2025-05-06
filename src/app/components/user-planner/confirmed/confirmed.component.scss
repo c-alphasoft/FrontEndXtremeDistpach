@@ -1,0 +1,93 @@
+.no-shadow {
+  box-shadow: none;
+}
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+/* Para navegadores basados en WebKit (Chrome, Edge, Safari) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  width: 50px; /* Aumenta el tamaño de los botones */
+  height: 50px;
+}
+
+/* Estilos para el header del panel */
+.panel-header-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.panel-data-group {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.data-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-number {
+  min-width: 100px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9em;
+}
+
+.data-label {
+  min-width: 100px;
+  color: #777;
+  font-size: 0.95em;
+}
+
+.data-label-m3 {
+  min-width: 100px;
+  color: #777;
+  font-size: 0.95em;
+}
+
+.small-data {
+  min-width: 60px;
+}
+
+.status-value {
+  min-width: 100px;
+  color: #2e7d32;
+  font-weight: 500;
+  font-size: 0.95em;
+  margin-left: 40px;
+}
+
+.action-button {
+  margin-left: auto;
+  color: #3f51b5;
+  margin-right: 12px; /* Separación adicional del borde derecho */
+}
+
+@media (max-width: 768px) {
+  .panel-data-group {
+    gap: 8px;
+  }
+  .data-item {
+    min-width: 80px !important;
+  }
+  .action-button {
+    margin-right: 8px;
+  }
+}

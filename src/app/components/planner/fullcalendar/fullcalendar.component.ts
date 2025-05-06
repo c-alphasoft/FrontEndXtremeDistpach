@@ -294,6 +294,7 @@ export class AppFullcalendarComponent implements OnInit {
         },
         despacho: officeFound,
       };
+      console.log('ful calendar', dataToSend);
 
       this.router.navigate(['/admin/planner/dispatch-detail'], {
         state: { datos: dataToSend },

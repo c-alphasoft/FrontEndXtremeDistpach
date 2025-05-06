@@ -91,6 +91,7 @@ export class RequestDispatchComponent implements OnInit {
   initializeForm(customerData: any): void {
     const today = new Date();
     this.eventForm = this.fb.group({
+      id: [customerData.id || '', Validators.required],
       customer: [customerData.customer || '', Validators.required],
       applicant: [customerData.applicant || '', Validators.required],
       deliveryPoint: [customerData.deliveryPoint || '', Validators.required],
@@ -214,6 +215,7 @@ export class RequestDispatchComponent implements OnInit {
       idorders: 0,
       codOrder: '',
       client: order_obj.customer?.trim() || '',
+      customer_id: order_obj.id || 0,
       clientEmail: userEmail,
       applicant: order_obj.applicant?.trim() || '',
       product: order_obj.nameProduct?.trim() || '',
